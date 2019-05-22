@@ -1,4 +1,4 @@
-package com.example.tupperapp;
+package com.example.tupperapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tupperapp.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -27,7 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class singin_activity extends AppCompatActivity {
+public class Login_activity extends AppCompatActivity {
 
     private static final String TAG = "";
     private EditText inputEmail, inputPassword;
@@ -56,7 +57,7 @@ public class singin_activity extends AppCompatActivity {
 
         //check the current user
         if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(singin_activity.this, Home_screen.class));
+            startActivity(new Intent(Login_activity.this, MainActivity.class));
             finish();
         }
 
@@ -80,7 +81,7 @@ public class singin_activity extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(singin_activity.this, singup_activity.class));
+                startActivity(new Intent(Login_activity.this, Signup_activity.class));
             }
         });
 
@@ -107,7 +108,7 @@ public class singin_activity extends AppCompatActivity {
 
                 //authenticate user
                 mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(singin_activity.this, new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(Login_activity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -116,13 +117,13 @@ public class singin_activity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     // there was an error
                                     Log.d(TAG, "signInWithEmail:success");
-                                    Intent intent = new Intent(singin_activity.this, Home_screen.class);
+                                    Intent intent = new Intent(Login_activity.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();
 
                                 } else {
                                     Log.d(TAG, "singInWithEmail:Fail");
-                                    Toast.makeText(singin_activity.this, getString(R.string.failed), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Login_activity.this, getString(R.string.failed), Toast.LENGTH_LONG).show();
                                 }
                             }
 
@@ -136,7 +137,7 @@ public class singin_activity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-                    startActivity(new Intent(singin_activity.this, Home_screen.class));
+                    startActivity(new Intent(Login_activity.this, Home_screen.class));
                 }
 
             }
@@ -192,7 +193,7 @@ public class singin_activity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(singin_activity.this, "Aut Fail", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login_activity.this, "Aut Fail", Toast.LENGTH_SHORT).show();
                             //updateUI(null);
                         }
 

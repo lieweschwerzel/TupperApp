@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "217107085375",
+    "firebase_url": "https://tupperapp-c1804.firebaseio.com",
+    "project_id": "tupperapp-c1804",
+    "storage_bucket": "tupperapp-c1804.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217107085375:android:47cc8bccacc6d918",
+        "android_client_info": {
+          "package_name": "com.example.tupperapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217107085375-63rm755uu55kg0c66taumpejahrk6ohn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tupperapp",
+            "certificate_hash": "b1769cb6be4756fcbcfc4b9cdd136fea504c1bbf"
+          }
+        },
+        {
+          "client_id": "217107085375-7jeuluiu3q3vgsi4fb0ap1m95jof67qu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG-A4YaZcHYiNiM1qV763sueGfv1eahPk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "217107085375-7jeuluiu3q3vgsi4fb0ap1m95jof67qu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

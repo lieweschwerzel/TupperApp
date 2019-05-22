@@ -1,4 +1,4 @@
-package com.example.tupperapp;
+package com.example.tupperapp.ui;
 
 
 import android.content.Intent;
@@ -14,13 +14,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tupperapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class singup_activity extends AppCompatActivity {
+public class Signup_activity extends AppCompatActivity {
     private EditText name, email_id, passwordcheck;
     private FirebaseAuth mAuth;
     private static final String TAG = "";
@@ -38,7 +39,7 @@ public class singup_activity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(singup_activity.this, singin_activity.class);
+                Intent intent = new Intent(Signup_activity.this, Login_activity.class);
                 startActivity(intent);
             }
         });
@@ -69,7 +70,7 @@ public class singup_activity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
 
                 mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(singup_activity.this, new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(Signup_activity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -79,13 +80,13 @@ public class singup_activity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    Intent intent = new Intent(singup_activity.this, Home_screen.class);
+                                    Intent intent = new Intent(Signup_activity.this, Home_screen.class);
                                     startActivity(intent);
                                     finish();
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(singup_activity.this, "Authentication failed.",
+                                    Toast.makeText(Signup_activity.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
 
                                 }

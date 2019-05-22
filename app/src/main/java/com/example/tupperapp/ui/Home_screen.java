@@ -1,4 +1,4 @@
-package com.example.tupperapp;
+package com.example.tupperapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tupperapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Home_screen extends AppCompatActivity {
@@ -47,7 +48,7 @@ public class Home_screen extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser()==null)
                 {
-                    startActivity(new Intent(Home_screen.this, singin_activity.class));
+                    startActivity(new Intent(Home_screen.this, Login_activity.class));
                 }
             }
         };

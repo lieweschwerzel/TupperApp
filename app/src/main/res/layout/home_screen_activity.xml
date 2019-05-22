@@ -6,18 +6,18 @@
 
     android:orientation="vertical"
     android:padding="24dp"
-    tools:context=".Home_screen">
+    tools:context=".ui.Home_screen">
 
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="359dp"
+        android:gravity="center"
         android:lineSpacingExtra="8sp"
         android:text="After Login "
         android:textSize="36sp"
-        android:textStyle="bold"
-        android:gravity="center"/>
+        android:textStyle="bold" />
 
 
     <Button
