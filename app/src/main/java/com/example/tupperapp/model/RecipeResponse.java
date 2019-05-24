@@ -6,47 +6,74 @@ import com.example.tupperapp.model.Recipe;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RecipeResponse {
 
-    @SerializedName("count")
-    @Expose
-    private Integer count;
-    @SerializedName("recipes")
-    @Expose
-    private List<Recipe> recipes = null;
+    public class RecipeResponse {
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public RecipeResponse() {
+        @SerializedName("title")
+        @Expose
+        private String title;
+        @SerializedName("version")
+        @Expose
+        private Double version;
+        @SerializedName("href")
+        @Expose
+        private String href;
+        @SerializedName("results")
+        @Expose
+        private List<Recipe> results = null;
+
+        /**
+         * No args constructor for use in serialization
+         *
+         */
+        public RecipeResponse() {
+        }
+
+        /**
+         *
+         * @param title
+         * @param results
+         * @param href
+         * @param version
+         */
+        public RecipeResponse(String title, Double version, String href, List<Recipe> results) {
+            super();
+            this.title = title;
+            this.version = version;
+            this.href = href;
+            this.results = results;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public Double getVersion() {
+            return version;
+        }
+
+        public void setVersion(Double version) {
+            this.version = version;
+        }
+
+        public String getHref() {
+            return href;
+        }
+
+        public void setHref(String href) {
+            this.href = href;
+        }
+
+        public List<Recipe> getRecipes() {
+            return results;
+        }
+
+        public void setResults(List<Recipe> results) {
+            this.results = results;
+        }
+
     }
-
-    /**
-     *
-     * @param count
-     * @param recipes
-     */
-    public RecipeResponse(Integer count, List<Recipe> recipes) {
-        super();
-        this.count = count;
-        this.recipes = recipes;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
-    public List<Recipe> getRecipes() {
-        return recipes;
-    }
-
-    public void setRecipes(List<Recipe> recipes) {
-        this.recipes = recipes;
-    }
-
-}

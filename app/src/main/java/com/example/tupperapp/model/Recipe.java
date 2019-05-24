@@ -5,30 +5,18 @@ import com.google.gson.annotations.SerializedName;
 
 public class Recipe {
 
-    @SerializedName("publisher")
-    @Expose
-    private String publisher;
-    @SerializedName("f2f_url")
-    @Expose
-    private String f2fUrl;
     @SerializedName("title")
     @Expose
     private String title;
-    @SerializedName("source_url")
+    @SerializedName("href")
     @Expose
-    private String sourceUrl;
-    @SerializedName("recipe_id")
+    private String href;
+    @SerializedName("ingredients")
     @Expose
-    private String recipeId;
-    @SerializedName("image_url")
+    private String ingredients;
+    @SerializedName("thumbnail")
     @Expose
-    private String imageUrl;
-    @SerializedName("social_rank")
-    @Expose
-    private Double socialRank;
-    @SerializedName("publisher_url")
-    @Expose
-    private String publisherUrl;
+    private String thumbnail;
 
     /**
      * No args constructor for use in serialization
@@ -39,41 +27,17 @@ public class Recipe {
 
     /**
      *
-     * @param socialRank
+     * @param ingredients
      * @param title
-     * @param imageUrl
-     * @param recipeId
-     * @param sourceUrl
-     * @param f2fUrl
-     * @param publisherUrl
-     * @param publisher
+     * @param thumbnail
+     * @param href
      */
-    public Recipe(String publisher, String f2fUrl, String title, String sourceUrl, String recipeId, String imageUrl, Double socialRank, String publisherUrl) {
+    public Recipe(String title, String href, String ingredients, String thumbnail) {
         super();
-        this.publisher = publisher;
-        this.f2fUrl = f2fUrl;
         this.title = title;
-        this.sourceUrl = sourceUrl;
-        this.recipeId = recipeId;
-        this.imageUrl = imageUrl;
-        this.socialRank = socialRank;
-        this.publisherUrl = publisherUrl;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public String getF2fUrl() {
-        return f2fUrl;
-    }
-
-    public void setF2fUrl(String f2fUrl) {
-        this.f2fUrl = f2fUrl;
+        this.href = href;
+        this.ingredients = ingredients;
+        this.thumbnail = thumbnail;
     }
 
     public String getTitle() {
@@ -84,44 +48,28 @@ public class Recipe {
         this.title = title;
     }
 
-    public String getSourceUrl() {
-        return sourceUrl;
+    public String getHref() {
+        return href;
     }
 
-    public void setSourceUrl(String sourceUrl) {
-        this.sourceUrl = sourceUrl;
+    public void setHref(String href) {
+        this.href = href;
     }
 
-    public String getRecipeId() {
-        return recipeId;
+    public String getIngredients() {
+        return ingredients;
     }
 
-    public void setRecipeId(String recipeId) {
-        this.recipeId = recipeId;
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getThumbnail() {
+        return thumbnail;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public Double getSocialRank() {
-        return socialRank;
-    }
-
-    public void setSocialRank(Double socialRank) {
-        this.socialRank = socialRank;
-    }
-
-    public String getPublisherUrl() {
-        return publisherUrl;
-    }
-
-    public void setPublisherUrl(String publisherUrl) {
-        this.publisherUrl = publisherUrl;
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
 }

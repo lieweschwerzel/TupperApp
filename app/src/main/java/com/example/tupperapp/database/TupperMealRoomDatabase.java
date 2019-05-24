@@ -9,7 +9,7 @@ import com.example.tupperapp.model.TupperMeal;
 
 @Database(entities = {TupperMeal.class}, version = 1, exportSchema = false)
 public abstract class TupperMealRoomDatabase extends RoomDatabase {
-    private final static String NAME_DATABASE = "tm2_database";
+    private final static String NAME_DATABASE = "tm9_database";
 
     public abstract TupperMealDao tupperMealDao();
 

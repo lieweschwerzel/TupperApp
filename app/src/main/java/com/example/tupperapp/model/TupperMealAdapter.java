@@ -54,14 +54,17 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
         TupperMeal tupperMeal = mTupperMeals.get(i);
 //        Recipe recipe = mRecipes.get(i);
         viewHolder.titleView.setText(tupperMeal.getTitle());
+//        viewHolder.platformView.setText(tupperMeal.getTitle());
         viewHolder.imageView.setImageResource(tupperMeal.getImageId());
         viewHolder.statusView.setText(tupperMeal.getStatus());
         viewHolder.dateView.setText(tupperMeal.getDate());
 
-        String poster =  tupperMeal.getUrl();
+        String poster =  "https:\\/\\/www.themealdb.com\\/images\\/media\\/meals\\/ustsqw1468250014.jpg";
+//        poster.replace("\\", "");
+        System.out.println();
 
         Glide.with(mContext)
-                .load(poster)
+                .load(poster.replace("\\", ""))
 //                .placeholder(R.drawable.loading)
                 .into(viewHolder.imageView);
     }
@@ -85,6 +88,7 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView titleView;
+        TextView platformView;
         ImageView imageView;
         TextView statusView;
         TextView dateView;
@@ -92,11 +96,13 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
         public ViewHolder(View itemView) {
             super(itemView);
             titleView = itemView.findViewById(R.id.text_view_title);
+            platformView = itemView.findViewById(R.id.editPlatform_addedit);
 //            final ImageView imageView = (ImageView)imageView.findViewById(R.id.imageView_image);
             imageView = itemView.findViewById(R.id.imageView_image);
             statusView = itemView.findViewById(R.id.text_view_status);
             dateView = itemView.findViewById(R.id.text_view_datum);
-            itemView.setOnClickListener(this);
+            imageView.setOnClickListener(this);
+//            itemView.setOnClickListener(this);
         }
 
         @Override

@@ -1,9 +1,11 @@
 package com.example.tupperapp.ui;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,12 +13,15 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.tupperapp.R;
 import com.example.tupperapp.model.Recipe;
 import com.example.tupperapp.model.TupperMeal;
@@ -39,6 +44,7 @@ public class AddEditActivity extends AppCompatActivity {
     private MainViewModel mMainViewModel;
 
     private EditText mTupperMealTitle;
+    private EditText mTupperMealPlatform;
     private ImageView mTupperMealImage;
     private Spinner mGameStatus;
 
@@ -48,12 +54,37 @@ public class AddEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_addedit);
         //Initialize the instance variables
         mTupperMealTitle = findViewById(R.id.editTitle_addedit);
-        mTupperMealImage = findViewById(R.id.imageView_image);
+        mTupperMealPlatform = findViewById(R.id.editTitle_addedit);
+        mTupperMealImage = findViewById(R.id.imageViewEdit);
         mGameStatus = findViewById(R.id.editStatus_addedit);
         mTupperMeals = new ArrayList<>();
 
         mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        mMainViewModel.getAllRecipes();
+
+        mMainViewModel.getAllRecipes().observe(this, new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(@Nullable List<Recipe> recipes) {
+
+                mRecipes = recipes;
+                String url = mRecipes.get(0).getThumbnail().replace("\\", "");
+//                mTupperMealImage.
+                mRecipes.get(0).setThumbnail(url);
+                Toast.makeText(AddEditActivity.this, url, Toast.LENGTH_LONG).show();
+                System.out.println(url);
+
+//                String poster =  "https://cdn0.wideopencountry.com/wp-content/uploads/2018/07/country-songs-about-rain-793x526.jpg";
+//
+//                Glide.with(AddEditActivity.this)
+//                        .load(poster)
+////                .placeholder(R.drawable.loading)
+//                        .into(mTupperMealImage);
+
+
+//                Toast.makeText(getApplication(), mTupperMeals.get(0).getTitle(), Toast.LENGTH_LONG).show();
+//               updateUI();
+            }
+        });
+//        mMainViewModel.getAllRecipes();
 
 
         addItemsOnSpinner();
@@ -80,29 +111,34 @@ public class AddEditActivity extends AppCompatActivity {
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String platform = mTupperMealPlatform.getText().toString();
                 String title = mTupperMealTitle.getText().toString();
                 int imageid = R.drawable.images;
                 String status = mGameStatus.getSelectedItem().toString();
                 String date = getDate();
-                String url = mMainViewModel.searchRecipes(title);
+                mMainViewModel.searchRecipes(title);
+                String url = "";
+//                Toast.makeText(AddEditActivity.this, url, Toast.LENGTH_SHORT).show();
+
+
 
                 //Check if everything has been added
-                if (!(TextUtils.isEmpty(title.trim())) && status != "Select a status...") {
+//                if (!(TextUtils.isEmpty(title.trim())) && status != "Select a status...") {
                     if (tmpTupperMeal != null) {
                         TupperMeal editTupperMeal = new TupperMeal(title, imageid, status, date, url);
                         int id = tmpTupperMeal.getId();
                         editTupperMeal.setId(id);
                         mMainViewModel.update(editTupperMeal);
-                        Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
-                        startActivity(intent);
+//                        Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
+//                        startActivity(intent);
                     } else {
                         TupperMeal newTupperMeal = new TupperMeal(title, imageid, status, date, url);
                         mMainViewModel.insert(newTupperMeal);
-                        Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
-                        startActivity(intent);
+//                        Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
+//                        startActivity(intent);
                     }
-                } else
-                    Snackbar.make(view, "Please insert a title, platform and select a status", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+//                } else
+//                    Snackbar.make(view, "Please insert a title, platform and select a status", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
     }
@@ -168,5 +204,6 @@ public class AddEditActivity extends AppCompatActivity {
         String date = dateFormat.format(tempdate);
         return date;
     }
+
 
 }

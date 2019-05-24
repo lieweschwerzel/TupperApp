@@ -56,7 +56,9 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
             @Override
             public void onChanged(@Nullable List<TupperMeal> tupperMeals) {
                 mTupperMeals = tupperMeals;
-                Toast.makeText(getApplication(), mTupperMeals.get(0).getUrl(), Toast.LENGTH_SHORT).show();
+//                if (mTupperMeals != null) {
+//                    Toast.makeText(getApplication(), mTupperMeals.get(0).getTitle(), Toast.LENGTH_LONG).show();
+//                }
                 updateUI();
             }
         });
@@ -65,7 +67,10 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
                 mRecipes = recipes;
-//                Toast.makeText(getApplication(), mRecipes.get(1).getImageUrl(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplication(), mRecipes.get(0).getTitle(), Toast.LENGTH_LONG).show();
+//                http:\/\/img.recipepuppy.com\/267093.jpg
+                String url = mRecipes.get(0).getThumbnail().replace("\\", "");
+                Toast.makeText(MainActivity.this, url, Toast.LENGTH_SHORT).show();
                 updateUI();
             }
         });
@@ -116,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
         mMainViewModel.searchRecipes("pizza");
     }
 
-    private void updateUI() {
+    public void updateUI() {
         if (mAdapter == null) {
             mAdapter = new TupperMealAdapter(this, mTupperMeals, mRecipes, this);
             mRecyclerView.setAdapter(mAdapter);

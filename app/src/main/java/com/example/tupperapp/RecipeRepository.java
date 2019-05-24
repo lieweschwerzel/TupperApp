@@ -11,7 +11,7 @@ public class RecipeRepository {
     private Service movieService = MovieApi.create();
 
     public Call<RecipeResponse> searchRecipes(String search) {
-        return movieService.searchRecipes(BuildConfig.THE_MOVIE_DB_API_TOKEN, search);
+        return movieService.searchRecipes(search);
     }
 
 }
