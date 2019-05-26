@@ -49,24 +49,15 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         TupperMeal tupperMeal = mTupperMeals.get(i);
-//        Recipe_old recipe = mRecipes.get(i);
         viewHolder.titleView.setText(tupperMeal.getTitle());
 //        viewHolder.platformView.setText(tupperMeal.getTitle());
         viewHolder.imageView.setImageResource(tupperMeal.getImageId());
-        viewHolder.imageRecipeLogoView.setImageResource(R.drawable.image);
+        viewHolder.imageRecipeLogoView.setImageResource(R.drawable.ic_wallpaper);
         viewHolder.statusView.setText(tupperMeal.getStatus());
         viewHolder.dateView.setText(tupperMeal.getDate());
 
         String poster = "https:\\/\\/www.themealdb.com\\/image\\/media\\/meals\\/ustsqw1468250014.jpg";
 //        poster.replace("\\", "");
-        System.out.println();
-
-        String url = tupperMeal.getUrl();
-
-//        Glide.with(mContext)
-//                .load(poster.replace("\\", ""))
-////                .image(R.drawable.loading)
-//                .into(viewHolder.imageView);
     }
 
     public TupperMeal getMealAt(int position) {

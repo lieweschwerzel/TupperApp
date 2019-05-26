@@ -5,8 +5,10 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +29,12 @@ import com.example.tupperapp.model.MainViewModel;
 import com.example.tupperapp.model.Recipe;
 import com.example.tupperapp.model.TupperMeal;
 import com.example.tupperapp.model.TupperMealAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,6 +56,7 @@ public class AddEditActivity extends AppCompatActivity {
     private ImageView mTupperMealImage;
     private Spinner mGameStatus;
     private Button cameraButton;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,16 +80,11 @@ public class AddEditActivity extends AppCompatActivity {
                 Toast.makeText(AddEditActivity.this, url, Toast.LENGTH_LONG).show();
                 System.out.println(url);
 
-//                String poster =  "https://cdn0.wideopencountry.com/wp-content/uploads/2018/07/country-songs-about-rain-793x526.jpg";
+                String poster =  "https://cdn0.wideopencountry.com/wp-content/uploads/2018/07/country-songs-about-rain-793x526.jpg";
 
                 Glide.with(AddEditActivity.this)
-                        .load(url)
-//                .image(R.drawable.loading)
+                        .load(poster)
                         .into(mTupperMealImage);
-
-
-//                Toast.makeText(getApplication(), mTupperMeals.get(0).getTitle(), Toast.LENGTH_LONG).show();
-//               updateUI();
             }
         });
 
@@ -112,14 +115,13 @@ public class AddEditActivity extends AppCompatActivity {
             }
         });
 
-
         FloatingActionButton savebutton = findViewById(R.id.fabsave);
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String platform = mTupperMealPlatform.getText().toString();
                 String title = mTupperMealTitle.getText().toString();
-                int imageid = R.drawable.image;
+                int imageid = R.drawable.person;
                 String status = mGameStatus.getSelectedItem().toString();
                 String date = getDate();
 
@@ -211,6 +213,27 @@ public class AddEditActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Bitmap bitmap = (Bitmap)data.getExtras().get("data");
         mTupperMealImage.setImageBitmap(bitmap);
+        // Get the data from an ImageView as bytes
+//        mTupperMealImage.setDrawingCacheEnabled(true);
+//        mTupperMealImage.buildDrawingCache();
+//        Bitmap bitmap = ((BitmapDrawable) mTupperMealImage.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data2 = baos.toByteArray();
+
+        UploadTask uploadTask = mountainsRef.putBytes(data2);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+            }
+        });
     }
 
 
