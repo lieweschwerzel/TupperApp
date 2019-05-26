@@ -61,7 +61,7 @@ public class Login_activity extends AppCompatActivity {
             finish();
         }
 
-        setContentView(R.layout.activity_singin_activity);
+        setContentView(R.layout.activity_login_activity);
 
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);

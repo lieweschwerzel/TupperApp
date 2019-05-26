@@ -3,6 +3,7 @@ package com.example.tupperapp.ui;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -21,7 +22,6 @@ import android.widget.Toast;
 
 import com.example.tupperapp.R;
 import com.example.tupperapp.model.MainViewModel;
-import com.example.tupperapp.model.Recipe;
 import com.example.tupperapp.model.TupperMeal;
 import com.example.tupperapp.model.TupperMealAdapter;
 
@@ -31,7 +31,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements TupperMealAdapter.OnItemClickListener, SearchView.OnQueryTextListener {
     //instance variables
     private List<TupperMeal> mTupperMeals;
-    private List<Recipe> mRecipes;
+    //    private List<Recipe_old> mRecipes;
     private TupperMealAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private MainViewModel mMainViewModel;
@@ -56,30 +56,18 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
             @Override
             public void onChanged(@Nullable List<TupperMeal> tupperMeals) {
                 mTupperMeals = tupperMeals;
-//                if (mTupperMeals != null) {
-//                    Toast.makeText(getApplication(), mTupperMeals.get(0).getTitle(), Toast.LENGTH_LONG).show();
-//                }
                 updateUI();
             }
         });
-
-        mMainViewModel.getAllRecipes().observe(this, new Observer<List<Recipe>>() {
-            @Override
-            public void onChanged(@Nullable List<Recipe> recipes) {
-                mRecipes = recipes;
-                Toast.makeText(getApplication(), mRecipes.get(0).getTitle(), Toast.LENGTH_LONG).show();
-//                http:\/\/img.recipepuppy.com\/267093.jpg
-                String url = mRecipes.get(0).getThumbnail().replace("\\", "");
-                Toast.makeText(MainActivity.this, url, Toast.LENGTH_SHORT).show();
-                updateUI();
-            }
-        });
-
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    startActivityForResult(intent,0);
+//                }
+//            });
                 Intent intent = new Intent(MainActivity.this, AddEditActivity.class);
                 startActivity(intent);
             }
@@ -118,12 +106,12 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
 
             }
         }).attachToRecyclerView(mRecyclerView);
-        mMainViewModel.searchRecipes("pizza");
+//        mMainViewModel.searchRecipes("pizza");
     }
 
     public void updateUI() {
         if (mAdapter == null) {
-            mAdapter = new TupperMealAdapter(this, mTupperMeals, mRecipes, this);
+            mAdapter = new TupperMealAdapter(this, mTupperMeals, this);
             mRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.swapList(mTupperMeals);
@@ -147,37 +135,12 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
         return super.onOptionsItemSelected(item);
     }
 
-//    public void deleteAll() {
-//        final List<TupperMeal> allDeletedGameBacklogs;
-//        allDeletedGameBacklogs = new ArrayList<>();
-//        View parentLayout = findViewById(android.R.id.content);
-//
-//        for (TupperMeal backlog : mTupperMeals) {
-//            mMainViewModel.delete(backlog);
-//            allDeletedGameBacklogs.add(backlog);
-//        }
-//        Snackbar.make(parentLayout, "All games deleted", Snackbar.LENGTH_LONG)
-//                .setActionTextColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimaryLightBlue))
-//                .setCallback(new Snackbar.Callback() {
-//                    @Override
-//                    public void onDismissed(Snackbar snackbar, int event) {
-//                    }
-//                })
-//                .setAction("UNDO", new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        for (int pos = 0; pos < allDeletedGameBacklogs.size(); pos++) {
-//                            TupperMeal tmpGameBacklog = allDeletedGameBacklogs.get(pos);
-//                            mMainViewModel.insert(tmpGameBacklog);
-//                        }
-//                    }
-//                })
-//                .show();
-//    }
-
     @Override
     public void onItemClick(int position) {
         TupperMeal tupperMeal = mTupperMeals.get(position);
+//        Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
+//        startActivity(intent);
+//        Toast.makeText(this, tupperMeal.toString(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(MainActivity.this, AddEditActivity.class);
         intent.putExtra(MainActivity.EXTRA_TUPPERMEAL, tupperMeal);
         startActivity(intent);
@@ -192,5 +155,14 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
     @Override
     public boolean onQueryTextChange(String s) {
         return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+//        mTupperMeals.get(0).setImageId(bitmap);
+//        mAdapter.
+//        imageView.setImageBitmap(bitmap);
     }
 }

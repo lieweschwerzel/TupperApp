@@ -7,13 +7,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -39,6 +36,7 @@ public class AddEditActivity extends AppCompatActivity {
     //instance variables
     private List<TupperMeal> mTupperMeals;
     private List<Recipe> mRecipes;
+    String url;
 
     private TupperMealAdapter mAdapter;
     private MainViewModel mMainViewModel;
@@ -64,28 +62,23 @@ public class AddEditActivity extends AppCompatActivity {
         mMainViewModel.getAllRecipes().observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
-
                 mRecipes = recipes;
                 String url = mRecipes.get(0).getThumbnail().replace("\\", "");
-//                mTupperMealImage.
-                mRecipes.get(0).setThumbnail(url);
                 Toast.makeText(AddEditActivity.this, url, Toast.LENGTH_LONG).show();
                 System.out.println(url);
 
 //                String poster =  "https://cdn0.wideopencountry.com/wp-content/uploads/2018/07/country-songs-about-rain-793x526.jpg";
-//
-//                Glide.with(AddEditActivity.this)
-//                        .load(poster)
-////                .placeholder(R.drawable.loading)
-//                        .into(mTupperMealImage);
+
+                Glide.with(AddEditActivity.this)
+                        .load(url)
+//                .image(R.drawable.loading)
+                        .into(mTupperMealImage);
 
 
 //                Toast.makeText(getApplication(), mTupperMeals.get(0).getTitle(), Toast.LENGTH_LONG).show();
 //               updateUI();
             }
         });
-//        mMainViewModel.getAllRecipes();
-
 
         addItemsOnSpinner();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
@@ -113,13 +106,9 @@ public class AddEditActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String platform = mTupperMealPlatform.getText().toString();
                 String title = mTupperMealTitle.getText().toString();
-                int imageid = R.drawable.images;
+                int imageid = R.drawable.image;
                 String status = mGameStatus.getSelectedItem().toString();
                 String date = getDate();
-                mMainViewModel.searchRecipes(title);
-                String url = "";
-//                Toast.makeText(AddEditActivity.this, url, Toast.LENGTH_SHORT).show();
-
 
 
                 //Check if everything has been added
@@ -129,13 +118,13 @@ public class AddEditActivity extends AppCompatActivity {
                         int id = tmpTupperMeal.getId();
                         editTupperMeal.setId(id);
                         mMainViewModel.update(editTupperMeal);
-//                        Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
-//                        startActivity(intent);
+                        Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
+                        startActivity(intent);
                     } else {
                         TupperMeal newTupperMeal = new TupperMeal(title, imageid, status, date, url);
                         mMainViewModel.insert(newTupperMeal);
-//                        Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
-//                        startActivity(intent);
+                        Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
+                        startActivity(intent);
                     }
 //                } else
 //                    Snackbar.make(view, "Please insert a title, platform and select a status", Snackbar.LENGTH_LONG).setAction("Action", null).show();

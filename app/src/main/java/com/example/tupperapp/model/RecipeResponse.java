@@ -2,7 +2,6 @@ package com.example.tupperapp.model;
 
 import java.util.List;
 
-import com.example.tupperapp.model.Recipe;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

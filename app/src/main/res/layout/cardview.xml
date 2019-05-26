@@ -17,11 +17,9 @@
 
         <TextView
             android:id="@+id/text_view_title"
-            android:layout_width="316dp"
+            android:layout_width="209dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="0dp"
             android:layout_toEndOf="@+id/imageView_image"
             android:ellipsize="end"
             android:maxLines="1"
@@ -36,8 +34,8 @@
             android:layout_below="@id/text_view_title"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="77dp"
-            android:layout_toStartOf="@+id/text_view_datum"
+            android:layout_marginEnd="153dp"
+            android:layout_toStartOf="@+id/imageView_image3"
             android:layout_toEndOf="@+id/imageView_image"
             android:text="Status"
             android:textAlignment="textStart" />
@@ -46,10 +44,12 @@
             android:id="@+id/text_view_datum"
             android:layout_width="153dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_title"
+            android:layout_below="@+id/imageView_image3"
+            android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="2dp"
+            android:layout_marginStart="138dp"
+            android:layout_marginTop="-31dp"
+            android:layout_marginEnd="111dp"
             android:text="Datum"
             android:textAlignment="center" />
 
@@ -59,7 +59,19 @@
             android:layout_height="52dp"
             android:layout_alignParentStart="true"
             android:layout_marginStart="8dp"
-            tools:srcCompat="@drawable/images" />
+            tools:srcCompat="@drawable/image" />
+
+        <ImageView
+            android:id="@+id/imageView_image3"
+            android:layout_width="53dp"
+            android:layout_height="52dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="26dp"
+            android:layout_toEndOf="@+id/text_view_title"
+            tools:srcCompat="@drawable/image" />
 
     </RelativeLayout>
 
