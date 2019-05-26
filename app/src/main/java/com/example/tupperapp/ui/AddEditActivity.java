@@ -3,8 +3,10 @@ package com.example.tupperapp.ui;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -20,10 +23,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.tupperapp.R;
+import com.example.tupperapp.model.MainViewModel;
 import com.example.tupperapp.model.Recipe;
 import com.example.tupperapp.model.TupperMeal;
 import com.example.tupperapp.model.TupperMealAdapter;
-import com.example.tupperapp.model.MainViewModel;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -45,6 +48,7 @@ public class AddEditActivity extends AppCompatActivity {
     private EditText mTupperMealPlatform;
     private ImageView mTupperMealImage;
     private Spinner mGameStatus;
+    private Button cameraButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +57,9 @@ public class AddEditActivity extends AppCompatActivity {
         //Initialize the instance variables
         mTupperMealTitle = findViewById(R.id.editTitle_addedit);
         mTupperMealPlatform = findViewById(R.id.editTitle_addedit);
-        mTupperMealImage = findViewById(R.id.imageViewEdit);
+        mTupperMealImage = findViewById(R.id.imageTupperMeal_addedit);
         mGameStatus = findViewById(R.id.editStatus_addedit);
+        cameraButton = findViewById(R.id.cameraButton);
         mTupperMeals = new ArrayList<>();
 
         mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
@@ -90,6 +95,7 @@ public class AddEditActivity extends AppCompatActivity {
         if (tmpTupperMeal != null) {
             setTitle("Edit this Meal");
             mTupperMealTitle.setText(tmpTupperMeal.getTitle());
+            mTupperMealImage.setImageResource(tmpTupperMeal.getImageId());
 //            mTupperMealTitle.setText(mMainViewModel.getAllRecipes().toString());
 //            mTupperMealImage.setImageDrawable(tmpTupperMeal.getImageId());
             //Spinner instellen, krijg positie van status in de lijst met spinner elementen
@@ -98,6 +104,13 @@ public class AddEditActivity extends AppCompatActivity {
         } else
             setTitle("New Meal");
 
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, 0);
+            }
+        });
 
 
         FloatingActionButton savebutton = findViewById(R.id.fabsave);
@@ -109,7 +122,6 @@ public class AddEditActivity extends AppCompatActivity {
                 int imageid = R.drawable.image;
                 String status = mGameStatus.getSelectedItem().toString();
                 String date = getDate();
-
 
                 //Check if everything has been added
 //                if (!(TextUtils.isEmpty(title.trim())) && status != "Select a status...") {
@@ -193,6 +205,14 @@ public class AddEditActivity extends AppCompatActivity {
         String date = dateFormat.format(tempdate);
         return date;
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+        mTupperMealImage.setImageBitmap(bitmap);
+    }
+
 
 
 }

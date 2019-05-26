@@ -35,7 +35,7 @@ public class RecipeActivity extends AppCompatActivity {
     private TextView mTupperMealTitle;
     private TextView mTupperMealWeb;
     private ImageView mTupperMealImage;
-    private Button mButton;
+    private Button mButton, cameraButton;
 
     public static final String EXTRA_BOOKMARK = "Bookmark";
 
