@@ -261,7 +261,7 @@ public class AddEditActivity extends AppCompatActivity {
     public void addItemsOnSpinner() {
         mGameStatus = (Spinner) findViewById(R.id.editStatus_addedit);
         List<String> list = new ArrayList<String>();
-        list.add("Select a status...");
+//        list.add("Select a status...");
         list.add("Want to Play");
         list.add("Playing");
         list.add("Stalled");
