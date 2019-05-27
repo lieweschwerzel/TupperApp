@@ -1,6 +1,6 @@
-package com.example.tupperapp.api;
+package com.example.tuppermeals.api;
 
-import com.example.tupperapp.model.RecipeResponse;
+import com.example.tuppermeals.model.RecipeResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

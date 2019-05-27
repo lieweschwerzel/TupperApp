@@ -1,8 +1,8 @@
-package com.example.tupperapp;
+package com.example.tuppermeals;
 
-import com.example.tupperapp.api.RecipeApi;
-import com.example.tupperapp.api.Service;
-import com.example.tupperapp.model.RecipeResponse;
+import com.example.tuppermeals.api.RecipeApi;
+import com.example.tuppermeals.api.Service;
+import com.example.tuppermeals.model.RecipeResponse;
 
 import retrofit2.Call;
 

@@ -1,6 +1,6 @@
 
 
-package com.example.tupperapp.model;
+package com.example.tuppermeals.model;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,9 +14,10 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.tupperapp.R;
-import com.example.tupperapp.ui.MainActivity;
-import com.example.tupperapp.ui.RecipeActivity;
+import com.bumptech.glide.Glide;
+import com.example.tuppermeals.R;
+import com.example.tuppermeals.ui.MainActivity;
+import com.example.tuppermeals.ui.RecipeActivity;
 
 import java.util.List;
 
@@ -51,13 +52,20 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
         TupperMeal tupperMeal = mTupperMeals.get(i);
         viewHolder.titleView.setText(tupperMeal.getTitle());
 //        viewHolder.platformView.setText(tupperMeal.getTitle());
-        viewHolder.imageView.setImageResource(tupperMeal.getImageId());
-        viewHolder.imageRecipeLogoView.setImageResource(R.drawable.ic_wallpaper);
+//        viewHolder.imageView.setImageDrawable(tupperMeal.getUrl());
+        viewHolder.imageRecipeLogoView.setImageResource(R.drawable.ic_search);
         viewHolder.statusView.setText(tupperMeal.getStatus());
         viewHolder.dateView.setText(tupperMeal.getDate());
 
         String poster = "https:\\/\\/www.themealdb.com\\/image\\/media\\/meals\\/ustsqw1468250014.jpg";
 //        poster.replace("\\", "");
+
+        String url = tupperMeal.getUrl();
+
+        Glide.with(mContext)
+                .load(url)
+//                .placeholder(R.drawable.loading)
+                .into(viewHolder.imageView);
     }
 
     public TupperMeal getMealAt(int position) {

@@ -1,4 +1,4 @@
-package com.example.tupperapp.ui;
+package com.example.tuppermeals.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,8 +7,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.example.tupperapp.R;
-import com.example.tupperapp.model.Recipe;
+import com.example.tuppermeals.R;
 
 public class WebActivity extends AppCompatActivity {
 

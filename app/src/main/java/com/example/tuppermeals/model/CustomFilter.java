@@ -1,4 +1,4 @@
-package com.example.tupperapp.model;
+package com.example.tuppermeals.model;
 
     import android.widget.Filter;
     import java.util.ArrayList;

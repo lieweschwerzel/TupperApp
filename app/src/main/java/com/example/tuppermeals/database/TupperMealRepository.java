@@ -1,11 +1,10 @@
-package com.example.tupperapp.database;
+package com.example.tuppermeals.database;
 
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 
-import com.example.tupperapp.model.TupperMeal;
+import com.example.tuppermeals.model.TupperMeal;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;

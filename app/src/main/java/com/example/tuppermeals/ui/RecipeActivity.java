@@ -1,4 +1,4 @@
-package com.example.tupperapp.ui;
+package com.example.tuppermeals.ui;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -7,19 +7,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import com.example.tupperapp.R;
-import com.example.tupperapp.model.MainViewModel;
-import com.example.tupperapp.model.Recipe;
-import com.example.tupperapp.model.TupperMeal;
+import com.example.tuppermeals.R;
+import com.example.tuppermeals.model.MainViewModel;
+import com.example.tuppermeals.model.Recipe;
+import com.example.tuppermeals.model.TupperMeal;
 
 import java.util.List;
 
@@ -35,7 +33,7 @@ public class RecipeActivity extends AppCompatActivity {
     private TextView mTupperMealTitle;
     private TextView mTupperMealWeb;
     private ImageView mTupperMealImage;
-    private Button mButton, cameraButton;
+    private Button mButton;
 
     public static final String EXTRA_BOOKMARK = "Bookmark";
 

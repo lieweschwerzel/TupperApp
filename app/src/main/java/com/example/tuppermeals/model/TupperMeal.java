@@ -1,4 +1,4 @@
-package com.example.tupperapp.model;
+package com.example.tuppermeals.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;

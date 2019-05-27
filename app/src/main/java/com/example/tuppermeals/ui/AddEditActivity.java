@@ -1,16 +1,20 @@
-package com.example.tupperapp.ui;
+package com.example.tuppermeals.ui;
 
+import android.Manifest;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -24,29 +28,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.tupperapp.R;
-import com.example.tupperapp.model.MainViewModel;
-import com.example.tupperapp.model.Recipe;
-import com.example.tupperapp.model.TupperMeal;
-import com.example.tupperapp.model.TupperMealAdapter;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.UploadTask;
+import com.example.tuppermeals.R;
+import com.example.tuppermeals.model.MainViewModel;
+import com.example.tuppermeals.model.Recipe;
+import com.example.tuppermeals.model.TupperMeal;
+import com.example.tuppermeals.model.TupperMealAdapter;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+//import com.google.firebase.storage.FirebaseStorage;
+//import com.google.firebase.storage.UploadTask;
 
 public class AddEditActivity extends AppCompatActivity {
     //instance variables
     private List<TupperMeal> mTupperMeals;
     private List<Recipe> mRecipes;
-    String url;
+
 
     private TupperMealAdapter mAdapter;
     private MainViewModel mMainViewModel;
@@ -56,7 +61,11 @@ public class AddEditActivity extends AppCompatActivity {
     private ImageView mTupperMealImage;
     private Spinner mGameStatus;
     private Button cameraButton;
-    FirebaseStorage storage = FirebaseStorage.getInstance();
+    private static final int REQUEST_CAPTURE_IMAGE = 100;
+    public static final int REQUEST_PERMISSION = 200;
+
+    private String currentPhotoPath = "";
+//    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +89,7 @@ public class AddEditActivity extends AppCompatActivity {
                 Toast.makeText(AddEditActivity.this, url, Toast.LENGTH_LONG).show();
                 System.out.println(url);
 
-                String poster =  "https://cdn0.wideopencountry.com/wp-content/uploads/2018/07/country-songs-about-rain-793x526.jpg";
+                String poster = "https://cdn0.wideopencountry.com/wp-content/uploads/2018/07/country-songs-about-rain-793x526.jpg";
 
                 Glide.with(AddEditActivity.this)
                         .load(poster)
@@ -107,11 +116,18 @@ public class AddEditActivity extends AppCompatActivity {
         } else
             setTitle("New Meal");
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_PERMISSION);
+        }
+
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 0);
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(intent, 0);
+                openCameraIntent();
             }
         });
 
@@ -122,29 +138,123 @@ public class AddEditActivity extends AppCompatActivity {
                 String platform = mTupperMealPlatform.getText().toString();
                 String title = mTupperMealTitle.getText().toString();
                 int imageid = R.drawable.person;
+                String url = currentPhotoPath;
                 String status = mGameStatus.getSelectedItem().toString();
                 String date = getDate();
 
                 //Check if everything has been added
 //                if (!(TextUtils.isEmpty(title.trim())) && status != "Select a status...") {
-                    if (tmpTupperMeal != null) {
-                        TupperMeal editTupperMeal = new TupperMeal(title, imageid, status, date, url);
-                        int id = tmpTupperMeal.getId();
-                        editTupperMeal.setId(id);
-                        mMainViewModel.update(editTupperMeal);
-                        Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    } else {
-                        TupperMeal newTupperMeal = new TupperMeal(title, imageid, status, date, url);
-                        mMainViewModel.insert(newTupperMeal);
-                        Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    }
+                if (tmpTupperMeal != null) {
+                    TupperMeal editTupperMeal = new TupperMeal(title, imageid, status, date, url);
+                    int id = tmpTupperMeal.getId();
+                    editTupperMeal.setId(id);
+                    mMainViewModel.update(editTupperMeal);
+                    Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    TupperMeal newTupperMeal = new TupperMeal(title, imageid, status, date, url);
+                    mMainViewModel.insert(newTupperMeal);
+                    Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
 //                } else
 //                    Snackbar.make(view, "Please insert a title, platform and select a status", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
     }
+
+
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private void openCameraIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Toast.makeText(this, "no file", Toast.LENGTH_SHORT).show();
+
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.tuppermeals",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_CAPTURE_IMAGE);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        if (requestCode == REQUEST_CAPTURE_IMAGE) {
+            System.out.println("LIEWE   " + currentPhotoPath);
+            //don't compare the data to null, it will always come as  null because we are providing a file URI, so load with the imageFilePath we obtained before opening the cameraIntent
+            Glide.with(this).load(currentPhotoPath).into(mTupperMealImage);
+            // If you are using Glide.
+        }
+    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+////        super.onActivityResult(requestCode, resultCode, data);
+////        Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+////        mTupperMealImage.setImageBitmap(bitmap);
+////        if (requestCode == REQUEST_CAPTURE_IMAGE &&
+////                resultCode == RESULT_OK) {
+////            if (data != null && data.getExtras() != null) {
+////                Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+//        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+//            //don't compare the data to null, it will always come as  null because we are providing a file URI, so load with the imageFilePath we obtained before opening the cameraIntent
+//            Glide.with(this).load(imageFilePath).into(mTupperMealImage);
+////            mTupperMealImage.setImageBitmap(imageBitmap);
+//            // Get the data from an ImageView as bytes
+////        mTupperMealImage.setDrawingCacheEnabled(true);
+////        mTupperMealImage.buildDrawingCache();
+////        Bitmap bitmap = ((BitmapDrawable) mTupperMealImage.getDrawable()).getBitmap();
+////        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+////        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+////        byte[] data2 = baos.toByteArray();
+////
+////        UploadTask uploadTask = mountainsRef.putBytes(data2);
+////        uploadTask.addOnFailureListener(new OnFailureListener() {
+////            @Override
+////            public void onFailure(@NonNull Exception exception) {
+////                // Handle unsuccessful uploads
+////            }
+////        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+////            @Override
+////            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+////                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+////                // ...
+////            }
+////        });
+//        }
+//
+//
+//    }
+
 
     // add items into spinner dynamically
     public void addItemsOnSpinner() {
@@ -207,35 +317,4 @@ public class AddEditActivity extends AppCompatActivity {
         String date = dateFormat.format(tempdate);
         return date;
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-        mTupperMealImage.setImageBitmap(bitmap);
-        // Get the data from an ImageView as bytes
-//        mTupperMealImage.setDrawingCacheEnabled(true);
-//        mTupperMealImage.buildDrawingCache();
-//        Bitmap bitmap = ((BitmapDrawable) mTupperMealImage.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data2 = baos.toByteArray();
-
-        UploadTask uploadTask = mountainsRef.putBytes(data2);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
-            }
-        });
-    }
-
-
-
 }

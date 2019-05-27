@@ -1,4 +1,4 @@
-package com.example.tupperapp.model;
+package com.example.tuppermeals.model;
 
 import java.util.List;
 

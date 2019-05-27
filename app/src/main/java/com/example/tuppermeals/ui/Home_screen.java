@@ -1,4 +1,4 @@
-package com.example.tupperapp.ui;
+package com.example.tuppermeals.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tupperapp.R;
+import com.example.tuppermeals.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Home_screen extends AppCompatActivity {

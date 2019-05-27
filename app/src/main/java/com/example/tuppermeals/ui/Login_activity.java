@@ -1,4 +1,4 @@
-package com.example.tupperapp.ui;
+package com.example.tuppermeals.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tupperapp.R;
+import com.example.tuppermeals.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -137,7 +137,7 @@ public class Login_activity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-                    startActivity(new Intent(Login_activity.this, Home_screen.class));
+                    startActivity(new Intent(Login_activity.this, MainActivity.class));
                 }
 
             }

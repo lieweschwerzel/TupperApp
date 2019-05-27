@@ -1,10 +1,11 @@
-package com.example.tupperapp.ui;
+package com.example.tuppermeals.ui;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,12 +19,12 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.tupperapp.R;
-import com.example.tupperapp.model.MainViewModel;
-import com.example.tupperapp.model.TupperMeal;
-import com.example.tupperapp.model.TupperMealAdapter;
+import com.example.tuppermeals.R;
+import com.example.tuppermeals.model.MainViewModel;
+import com.example.tuppermeals.model.TupperMeal;
+import com.example.tuppermeals.model.TupperMealAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -35,6 +36,14 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
     private TupperMealAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private MainViewModel mMainViewModel;
+    FirebaseAuth mAuth;
+    FirebaseAuth.AuthStateListener mAuthListner;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListner);
+    }
 
     public static final String EXTRA_TUPPERMEAL = "Tuppermeal";
 
@@ -45,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mAuth = FirebaseAuth.getInstance();
         //Initialize the instance variables
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
@@ -72,6 +82,16 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
                 startActivity(intent);
             }
         });
+
+        mAuthListner = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser()==null)
+                {
+                    startActivity(new Intent(MainActivity.this, Login_activity.class));
+                }
+            }
+        };
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -107,6 +127,8 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
             }
         }).attachToRecyclerView(mRecyclerView);
 //        mMainViewModel.searchRecipes("pizza");
+
+
     }
 
     public void updateUI() {
@@ -128,11 +150,16 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_search) {
+        if (id == R.id.signoutmenu) {
             //deleteAll();
+           signOut2();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void signOut2(){
+        mAuth.signOut();
     }
 
     @Override
@@ -156,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
     public boolean onQueryTextChange(String s) {
         return false;
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

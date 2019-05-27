@@ -1,4 +1,4 @@
-package com.example.tupperapp;
+package com.example.tuppermeals;
 
 import org.junit.Test;
 

@@ -1,15 +1,15 @@
-package com.example.tupperapp.database;
+package com.example.tuppermeals.database;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import com.example.tupperapp.model.TupperMeal;
+import com.example.tuppermeals.model.TupperMeal;
 
 @Database(entities = {TupperMeal.class}, version = 1, exportSchema = false)
 public abstract class TupperMealRoomDatabase extends RoomDatabase {
-    private final static String NAME_DATABASE = "tm9_database";
+    private final static String NAME_DATABASE = "tm13_database";
 
     public abstract TupperMealDao tupperMealDao();
 

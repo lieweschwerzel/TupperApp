@@ -1,4 +1,4 @@
-package com.example.tupperapp.database;
+package com.example.tuppermeals.database;
 
 
 import android.arch.lifecycle.LiveData;
@@ -8,10 +8,9 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.example.tupperapp.model.TupperMeal;
+import com.example.tuppermeals.model.TupperMeal;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Dao

@@ -1,4 +1,4 @@
-package com.example.tupperapp.model;
+package com.example.tuppermeals.model;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
@@ -8,8 +8,8 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.tupperapp.RecipeRepository;
-import com.example.tupperapp.database.TupperMealRepository;
+import com.example.tuppermeals.RecipeRepository;
+import com.example.tuppermeals.database.TupperMealRepository;
 
 import java.util.List;
 

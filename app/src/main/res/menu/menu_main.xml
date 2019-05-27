@@ -3,12 +3,9 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 tools:context="com.example.bucketlist.ui.MainActivity">
 
-<item
-    android:id="@+id/action_search"
-    android:title="action_search"
-    android:icon="@drawable/ic_search"
-    app:showAsAction="ifRoom|collapseActionView"
-    app:actionViewClass="android.support.v7.widget.SearchView"
-    />
+    <item
+        android:id="@+id/signoutmenu"
+        android:icon="@drawable/common_google_signin_btn_icon_light_focused"
+        android:title="Signout"/>
 
 </menu>

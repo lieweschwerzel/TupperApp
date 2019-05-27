@@ -1,4 +1,4 @@
-package com.example.tupperapp.api;
+package com.example.tuppermeals.api;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
