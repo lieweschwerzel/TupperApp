@@ -108,6 +108,7 @@ public class AddEditActivity extends AppCompatActivity {
             setTitle("Edit this Meal");
             mTupperMealTitle.setText(tmpTupperMeal.getTitle());
             mTupperMealImage.setImageResource(tmpTupperMeal.getImageId());
+            Glide.with(this).load(tmpTupperMeal.getUrl()).into(mTupperMealImage);
 //            mTupperMealTitle.setText(mMainViewModel.getAllRecipes().toString());
 //            mTupperMealImage.setImageDrawable(tmpTupperMeal.getImageId());
             //Spinner instellen, krijg positie van status in de lijst met spinner elementen

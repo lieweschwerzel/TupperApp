@@ -53,7 +53,7 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
         viewHolder.titleView.setText(tupperMeal.getTitle());
 //        viewHolder.platformView.setText(tupperMeal.getTitle());
 //        viewHolder.imageView.setImageDrawable(tupperMeal.getUrl());
-        viewHolder.imageRecipeLogoView.setImageResource(R.drawable.ic_search);
+        viewHolder.imageRecipeLogoView.setImageResource(R.drawable.recipelogo);
         viewHolder.statusView.setText(tupperMeal.getStatus());
         viewHolder.dateView.setText(tupperMeal.getDate());
 
