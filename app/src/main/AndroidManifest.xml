@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tuppermeals">
-    <uses-feature android:name="android.hardware.camera"
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
-
-
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -16,6 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.SensorActivity"></activity>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.tuppermeals"
@@ -23,34 +27,33 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
-        <activity android:name="com.example.tuppermeals.ui.WebActivity"
-            android:parentActivityName="com.example.tuppermeals.ui.MainActivity">
-        </activity>
-        <activity android:name="com.example.tuppermeals.ui.Login_activity">
+
+        <activity
+            android:name=".ui.WebActivity"
+            android:parentActivityName=".ui.MainActivity"></activity>
+        <activity android:name=".ui.Login_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.tuppermeals.ui.Home_screen" />
-        <activity android:name="com.example.tuppermeals.ui.Signup_activity" />
+        <activity android:name=".ui.Home_screen" />
+        <activity android:name=".ui.Signup_activity" />
         <activity
-            android:name="com.example.tuppermeals.ui.MainActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.example.tuppermeals.ui.AddEditActivity"
-            android:parentActivityName="com.example.tuppermeals.ui.MainActivity"
+            android:name=".ui.AddEditActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.example.tuppermeals.ui.RecipeActivity"
-            android:parentActivityName="com.example.tuppermeals.ui.MainActivity">
-        </activity>
-
+            android:name=".ui.RecipeActivity"
+            android:parentActivityName=".ui.MainActivity"></activity>
     </application>
 
 </manifest>

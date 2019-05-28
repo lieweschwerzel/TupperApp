@@ -128,7 +128,10 @@ public class AddEditActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //                startActivityForResult(intent, 0);
-                openCameraIntent();
+//                openCameraIntent();
+                Intent intent = new Intent(AddEditActivity.this, SensorActivity.class);
+                startActivity(intent);
+
             }
         });
 

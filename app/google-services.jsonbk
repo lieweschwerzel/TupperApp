@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "708106135247",
+    "firebase_url": "https://tuppermeals-a3cfb.firebaseio.com",
+    "project_id": "tuppermeals-a3cfb",
+    "storage_bucket": "tuppermeals-a3cfb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708106135247:android:d1e24325f497bf1b",
+        "android_client_info": {
+          "package_name": "com.example.tuppermeals"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "708106135247-ftc0p22q5td233q6h8deam4cuorr0d64.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tuppermeals",
+            "certificate_hash": "b1769cb6be4756fcbcfc4b9cdd136fea504c1bbf"
+          }
+        },
+        {
+          "client_id": "708106135247-4kmumesmsfup969boqqbhi01jso9idva.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeSCRccu8hNsBek5M-bVAbh0VgFFb86Oo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "708106135247-4kmumesmsfup969boqqbhi01jso9idva.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
