@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -80,23 +81,7 @@ public class AddEditActivity extends AppCompatActivity {
         sensorButton = findViewById(R.id.sensorButton);
         mTupperMeals = new ArrayList<>();
 
-        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
-        mMainViewModel.getAllRecipes().observe(this, new Observer<List<Recipe>>() {
-            @Override
-            public void onChanged(@Nullable List<Recipe> recipes) {
-                mRecipes = recipes;
-                String url = mRecipes.get(0).getThumbnail().replace("\\", "");
-                Toast.makeText(AddEditActivity.this, url, Toast.LENGTH_LONG).show();
-                System.out.println(url);
-
-                String poster = "https://cdn0.wideopencountry.com/wp-content/uploads/2018/07/country-songs-about-rain-793x526.jpg";
-
-                Glide.with(AddEditActivity.this)
-                        .load(poster)
-                        .into(mTupperMealImage);
-            }
-        });
 
         addItemsOnSpinner();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
@@ -124,9 +109,11 @@ public class AddEditActivity extends AppCompatActivity {
                     REQUEST_PERMISSION);
         }
 
+        final MediaPlayer mp = MediaPlayer.create(AddEditActivity.this, R.raw.a);
         sensorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mp.start();
                 Intent intent = new Intent(AddEditActivity.this, SensorActivity.class);
                 startActivity(intent);
 
@@ -170,6 +157,24 @@ public class AddEditActivity extends AppCompatActivity {
                 }
 //                } else
 //                    Snackbar.make(view, "Please insert a title, platform and select a status", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            }
+        });
+
+        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+
+        mMainViewModel.getAllRecipes().observe(this, new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(@Nullable List<Recipe> recipes) {
+                mRecipes = recipes;
+                String url = mRecipes.get(0).getThumbnail().replace("\\", "");
+                Toast.makeText(AddEditActivity.this, url, Toast.LENGTH_LONG).show();
+                System.out.println(url);
+
+                String poster = "https://cdn0.wideopencountry.com/wp-content/uploads/2018/07/country-songs-about-rain-793x526.jpg";
+
+                Glide.with(AddEditActivity.this)
+                        .load(poster)
+                        .into(mTupperMealImage);
             }
         });
     }
