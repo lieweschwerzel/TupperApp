@@ -60,7 +60,7 @@ public class AddEditActivity extends AppCompatActivity {
     private EditText mTupperMealPlatform;
     private ImageView mTupperMealImage;
     private Spinner mGameStatus;
-    private Button cameraButton;
+    private Button cameraButton, sensorButton;
     private static final int REQUEST_CAPTURE_IMAGE = 100;
     public static final int REQUEST_PERMISSION = 200;
 
@@ -77,6 +77,7 @@ public class AddEditActivity extends AppCompatActivity {
         mTupperMealImage = findViewById(R.id.imageTupperMeal_addedit);
         mGameStatus = findViewById(R.id.editStatus_addedit);
         cameraButton = findViewById(R.id.cameraButton);
+        sensorButton = findViewById(R.id.sensorButton);
         mTupperMeals = new ArrayList<>();
 
         mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
@@ -123,15 +124,21 @@ public class AddEditActivity extends AppCompatActivity {
                     REQUEST_PERMISSION);
         }
 
+        sensorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddEditActivity.this, SensorActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //                startActivityForResult(intent, 0);
-//                openCameraIntent();
-                Intent intent = new Intent(AddEditActivity.this, SensorActivity.class);
-                startActivity(intent);
-
+                openCameraIntent();
             }
         });
 
