@@ -43,17 +43,14 @@ public class RecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
-        mTupperMealTitle = findViewById(R.id.recipeTitleTV);
         mTupperMealImage = findViewById(R.id.imageView2);
         mTupperMealWeb = findViewById(R.id.recipeWebTV);
-        mButton = findViewById(R.id.button);
 
-        mButton.setOnClickListener(new View.OnClickListener() {
+        mButton = findViewById(R.id.button);
+                mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String website = mRecipes.get(0).getHref();
-                System.out.println(website);
-//                Toast.makeText(mContext, website, Toast.LENGTH_SHORT).show();
+                String website = mRecipes.get(0).getSourceUrl();
                 Intent intent = new Intent(RecipeActivity.this, WebActivity.class);
                 intent.putExtra(EXTRA_BOOKMARK, website);
                 startActivity(intent);
@@ -75,13 +72,13 @@ public class RecipeActivity extends AppCompatActivity {
                 mRecipes = recipes;
 //                Toast.makeText(getApplication(), mRecipes.get(0).getTitle(), Toast.LENGTH_LONG).show();
 //                http:\/\/img.recipepuppy.com\/267093.jpg
-                String url = mRecipes.get(0).getThumbnail();//.replace("\\", "");
+                String url = mRecipes.get(0).getImageUrl();//.replace("\\", "");
 //                String website = ;
 //                Toast.makeText(RecipeActivity.this, website, Toast.LENGTH_SHORT).show();
 //                updateUI();
                 setTitle(mRecipes.get(0).getTitle());
-                mTupperMealTitle.setText(mRecipes.get(0).getTitle());
-                mTupperMealWeb.setText(mRecipes.get(0).getHref());
+//                mTupperMealTitle.setText(mRecipes.get(0).getTitle());
+                mTupperMealWeb.setText(mRecipes.get(0).getSourceUrl());
 
                         Glide.with(getApplicationContext())
                         .load(url)

@@ -7,8 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RecipeApi {
 
-    public static final String BASE_URL = "http://www.recipepuppy.com/api/";
-//    public static final String BASE_URL = "https://www.food2fork.com/api";
+//    public static final String BASE_URL = "http://www.recipepuppy.com/api/";
+    public static final String BASE_URL = "https://www.food2fork.com/api/";
 
 //    public static Retrofit retrofit = null;
 

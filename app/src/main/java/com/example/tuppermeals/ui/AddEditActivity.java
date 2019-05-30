@@ -166,7 +166,7 @@ public class AddEditActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
                 mRecipes = recipes;
-                String url = mRecipes.get(0).getThumbnail().replace("\\", "");
+                String url = mRecipes.get(0).getImageUrl().replace("\\", "");
                 Toast.makeText(AddEditActivity.this, url, Toast.LENGTH_LONG).show();
                 System.out.println(url);
 

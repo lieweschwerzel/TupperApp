@@ -24,7 +24,6 @@ public class MainViewModel extends AndroidViewModel {
     private RecipeRepository recipeRepository = new RecipeRepository();
     private MutableLiveData<List<Recipe>> mRecipes = new MutableLiveData<>();
     private MutableLiveData<String> error = new MutableLiveData<>();
-//    private MutableLiveData<String> trivia = new MutableLiveData<>();
 
     public MainViewModel(@NonNull Application application) {
         super(application);

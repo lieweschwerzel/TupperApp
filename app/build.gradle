@@ -18,7 +18,7 @@ android {
         }
     }
     buildTypes.each {
-        it.buildConfigField 'String', 'THE_MOVIE_DB_API_TOKEN', MyTheMovieDBApiToken
+        it.buildConfigField 'String', 'RECIPE_API_TOKEN', RecipeApiToken
 
     }
 }

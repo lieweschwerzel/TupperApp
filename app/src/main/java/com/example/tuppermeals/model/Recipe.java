@@ -1,5 +1,4 @@
 package com.example.tuppermeals.model;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,46 +7,44 @@ import com.google.gson.annotations.SerializedName;
 
 public class Recipe implements Parcelable {
 
+    @SerializedName("publisher")
+    @Expose
+    private String publisher;
+    @SerializedName("f2f_url")
+    @Expose
+    private String f2fUrl;
     @SerializedName("title")
     @Expose
     private String title;
-    @SerializedName("href")
+    @SerializedName("source_url")
     @Expose
-    private String href;
-    @SerializedName("ingredients")
+    private String sourceUrl;
+    @SerializedName("recipe_id")
     @Expose
-    private String ingredients;
-    @SerializedName("thumbnail")
+    private String recipeId;
+    @SerializedName("image_url")
     @Expose
-    private String thumbnail;
-
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public Recipe() {
-    }
-
-    /**
-     *
-     * @param ingredients
-     * @param title
-     * @param thumbnail
-     * @param href
-     */
-    public Recipe(String title, String href, String ingredients, String thumbnail) {
-        super();
-        this.title = title;
-        this.href = href;
-        this.ingredients = ingredients;
-        this.thumbnail = thumbnail;
-    }
+    private String imageUrl;
+    @SerializedName("social_rank")
+    @Expose
+    private Double socialRank;
+    @SerializedName("publisher_url")
+    @Expose
+    private String publisherUrl;
 
     protected Recipe(Parcel in) {
+        publisher = in.readString();
+        f2fUrl = in.readString();
         title = in.readString();
-        href = in.readString();
-        ingredients = in.readString();
-        thumbnail = in.readString();
+        sourceUrl = in.readString();
+        recipeId = in.readString();
+        imageUrl = in.readString();
+        if (in.readByte() == 0) {
+            socialRank = null;
+        } else {
+            socialRank = in.readDouble();
+        }
+        publisherUrl = in.readString();
     }
 
     public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
@@ -62,6 +59,22 @@ public class Recipe implements Parcelable {
         }
     };
 
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getF2fUrl() {
+        return f2fUrl;
+    }
+
+    public void setF2fUrl(String f2fUrl) {
+        this.f2fUrl = f2fUrl;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -70,57 +83,65 @@ public class Recipe implements Parcelable {
         this.title = title;
     }
 
-    public String getHref() {
-        return href;
+    public String getSourceUrl() {
+        return sourceUrl;
     }
 
-    public void setHref(String href) {
-        this.href = href;
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
     }
 
-    public String getIngredients() {
-        return ingredients;
+    public String getRecipeId() {
+        return recipeId;
     }
 
-    public void setIngredients(String ingredients) {
-        this.ingredients = ingredients;
+    public void setRecipeId(String recipeId) {
+        this.recipeId = recipeId;
     }
 
-    public String getThumbnail() {
-        return thumbnail;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    /**
-     * Describe the kinds of special objects contained in this Parcelable
-     * instance's marshaled representation. For example, if the object will
-     * include a file descriptor in the output of {@link #writeToParcel(Parcel, int)},
-     * the return value of this method must include the
-     * {@link #CONTENTS_FILE_DESCRIPTOR} bit.
-     *
-     * @return a bitmask indicating the set of special object types marshaled
-     * by this Parcelable object instance.
-     */
+    public Double getSocialRank() {
+        return socialRank;
+    }
+
+    public void setSocialRank(Double socialRank) {
+        this.socialRank = socialRank;
+    }
+
+    public String getPublisherUrl() {
+        return publisherUrl;
+    }
+
+    public void setPublisherUrl(String publisherUrl) {
+        this.publisherUrl = publisherUrl;
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
-    /**
-     * Flatten this object in to a Parcel.
-     *
-     * @param dest  The Parcel in which the object should be written.
-     * @param flags Additional flags about how the object should be written.
-     *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
-     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(publisher);
+        dest.writeString(f2fUrl);
         dest.writeString(title);
-        dest.writeString(href);
-        dest.writeString(ingredients);
-        dest.writeString(thumbnail);
+        dest.writeString(sourceUrl);
+        dest.writeString(recipeId);
+        dest.writeString(imageUrl);
+        if (socialRank == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(socialRank);
+        }
+        dest.writeString(publisherUrl);
     }
 }

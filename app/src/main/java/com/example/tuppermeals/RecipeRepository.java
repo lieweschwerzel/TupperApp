@@ -10,13 +10,13 @@ public class RecipeRepository {
 
     private Service movieService = RecipeApi.create();
 
-//    public Call<RecipeResponse> searchRecipes(String search) {
-//        return movieService.searchRecipes(search);
-//    }
-
     public Call<RecipeResponse> searchRecipes(String search) {
-        return movieService.searchRecipes( search); //BuildConfig.THE_MOVIE_DB_API_TOKEN,
+        return movieService.searchRecipes(BuildConfig.RECIPE_API_TOKEN, search);
     }
+
+//    public Call<RecipeResponse> searchRecipes(String search) {
+//        return movieService.searchRecipes( search); //
+//    }
 
 }
 
