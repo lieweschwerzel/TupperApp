@@ -13,11 +13,13 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -66,7 +68,7 @@ public class AddEditActivity extends AppCompatActivity {
     private static final int REQUEST_CAPTURE_IMAGE = 100;
     public static final int REQUEST_PERMISSION = 200;
 
-    private String currentPhotoPath = "";
+    private String currentPhotoPath = null;
 //    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Override
@@ -110,11 +112,11 @@ public class AddEditActivity extends AppCompatActivity {
         sensorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mp.start();
-                Intent intent = new Intent(AddEditActivity.this, SensorActivity.class);
-                startActivity(intent);
-                CustomIntent.customType(AddEditActivity.this, "left-to-right");
-
+//                mp.start();
+//                Intent intent = new Intent(AddEditActivity.this, SensorActivity.class);
+//                startActivity(intent);
+//                CustomIntent.customType(AddEditActivity.this, "left-to-right");
+                Toast.makeText(AddEditActivity.this, currentPhotoPath, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -132,7 +134,7 @@ public class AddEditActivity extends AppCompatActivity {
                 String platform = mTupperMealPlatform.getText().toString();
                 String title = mTupperMealTitle.getText().toString();
                 int imageid = R.drawable.person;
-                String url = currentPhotoPath;
+//                String url = currentPhotoPath;
                 SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 String strUserName = SP.getString("username", "NA");
 
@@ -140,44 +142,36 @@ public class AddEditActivity extends AppCompatActivity {
                 String date = getDate();
 
                 //Check if everything has been added
-//                if (!(TextUtils.isEmpty(title.trim())) && coolingtype != "Select a coolingtype...") {
+                if (!(TextUtils.isEmpty(title.trim())) && coolingtype != "Select a coolingtype...") {
                 if (tmpTupperMeal != null) {
-                    TupperMeal editTupperMeal = new TupperMeal(title, imageid, coolingtype, date, url);
-                    int id = tmpTupperMeal.getId();
-                    editTupperMeal.setId(id);
-                    mMainViewModel.update(editTupperMeal);
+                    if (currentPhotoPath==null){
+                        String url = tmpTupperMeal.getUrl();
+                        TupperMeal editTupperMeal = new TupperMeal(title, imageid, coolingtype, date, url);
+                        int id = tmpTupperMeal.getId();
+                        editTupperMeal.setId(id);
+                        mMainViewModel.update(editTupperMeal);
+                    }else {
+                        String url = currentPhotoPath;
+                        TupperMeal editTupperMeal = new TupperMeal(title, imageid, coolingtype, date, url);
+                        int id = tmpTupperMeal.getId();
+                        editTupperMeal.setId(id);
+                        mMainViewModel.update(editTupperMeal);
+                    }
                     Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
+                    String url = currentPhotoPath;
                     TupperMeal newTupperMeal = new TupperMeal(title, imageid, coolingtype, date, url);
                     mMainViewModel.insert(newTupperMeal);
                     Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
-//                } else
-//                    Snackbar.make(view, "Please insert a title, platform and select a coolingtype", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                } else
+                    Snackbar.make(view, "Please type in a name for a meal and select a type of cooling", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
 
         mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-
-
-
-//        mMainViewModel.getAllRecipes().observe(this, new Observer<List<Recipe>>() {
-//            @Override
-//            public void onChanged(@Nullable List<Recipe> recipes) {
-//                mRecipes = recipes;
-//                String url = mRecipes.get(0).getImageUrl().replace("\\", "");
-//                Toast.makeText(AddEditActivity.this, url, Toast.LENGTH_LONG).show();
-//                System.out.println(url);
-////
-////                String poster = "https://cdn0.wideopencountry.com/wp-content/uploads/2018/07/country-songs-about-rain-793x526.jpg";
-////
-////                Glide.with(AddEditActivity.this)
-////                        .load(poster)
-////                        .into(mTupperMealImage);
-//            }
-//        });
     }
 
     @Override
@@ -196,7 +190,6 @@ public class AddEditActivity extends AppCompatActivity {
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
@@ -240,7 +233,7 @@ public class AddEditActivity extends AppCompatActivity {
     public void addItemsOnSpinner() {
         mCoolingType = (Spinner) findViewById(R.id.editStatus_addedit);
         List<String> list = new ArrayList<String>();
-//        list.add("Select a coolingtype...");
+        list.add("Select a coolingtype...");
         list.add("Fridge");
         list.add("Freezer");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
@@ -279,6 +272,7 @@ public class AddEditActivity extends AppCompatActivity {
     // get position of existing Status in spinner
     public int getmGameStatusPos(String status) {
         List<String> list = new ArrayList<>();
+        list.add("Select a coolingtype...");
         list.add("Fridge");
         list.add("Freezer");
         return list.indexOf(status);
