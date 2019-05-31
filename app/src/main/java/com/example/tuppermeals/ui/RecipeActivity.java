@@ -97,8 +97,8 @@ public class RecipeActivity extends AppCompatActivity {
 
 //            mTupperMealTitle.setText(mMainViewModel.getAllRecipes().toString());
 //            mTupperMealImage.setImageDrawable(tmpTupperMeal.getImageId());
-        //Spinner instellen, krijg positie van status in de lijst met spinner elementen
-//            String tmpstatus = tmpTupperMeal.getStatus();
+        //Spinner instellen, krijg positie van coolingtype in de lijst met spinner elementen
+//            String tmpstatus = tmpTupperMeal.getCoolingType();
 //            mGameStatus.setSelection(getmGameStatusPos(tmpstatus));
 
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference android:title="Set the expiry days for your fridge"
+        android:key="username"
+        android:defaultValue="3"
+        android:summary="Please provide your username"></EditTextPreference>
+
+    <EditTextPreference android:title="Set the expiry days for your freezer"
+        android:key="time"
+        android:defaultValue="30"
+        android:summary="Set the expiry days of your fridge"></EditTextPreference>
+
+</PreferenceScreen>

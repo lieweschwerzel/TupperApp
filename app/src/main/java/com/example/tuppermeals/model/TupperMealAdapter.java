@@ -51,21 +51,12 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         TupperMeal tupperMeal = mTupperMeals.get(i);
         viewHolder.titleView.setText(tupperMeal.getTitle());
-//        viewHolder.platformView.setText(tupperMeal.getTitle());
-//        viewHolder.imageView.setImageDrawable(tupperMeal.getUrl());
         viewHolder.imageRecipeLogoView.setImageResource(R.drawable.recipelogo);
-        viewHolder.statusView.setText(tupperMeal.getStatus());
+        viewHolder.refrigeratorType.setText(tupperMeal.getCoolingType());
         viewHolder.dateView.setText("Expires on: "+tupperMeal.getDate());
 
-        String poster = "https:\\/\\/www.themealdb.com\\/image\\/media\\/meals\\/ustsqw1468250014.jpg";
-//        poster.replace("\\", "");
-
         String url = tupperMeal.getUrl();
-
-        Glide.with(mContext)
-                .load(url)
-//                .placeholder(R.drawable.loading)
-                .into(viewHolder.imageView);
+        Glide.with(mContext).load(url).into(viewHolder.imageView);
     }
 
     public TupperMeal getMealAt(int position) {
@@ -87,33 +78,20 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView titleView;
-        TextView platformView;
         ImageView imageView;
         ImageView imageRecipeLogoView;
-        TextView statusView;
+        TextView refrigeratorType;
         TextView dateView;
 
         public ViewHolder(final View itemView) {
             super(itemView);
             titleView = itemView.findViewById(R.id.text_view_title);
-            platformView = itemView.findViewById(R.id.editPlatform_addedit);
-//            final ImageView imageView = (ImageView)imageView.findViewById(R.id.imageView_image);
             imageView = itemView.findViewById(R.id.imageView_image);
             imageRecipeLogoView = itemView.findViewById(R.id.imageView_image3);
-            statusView = itemView.findViewById(R.id.text_view_status);
+            refrigeratorType = itemView.findViewById(R.id.refrigerator_type_spinner);
             dateView = itemView.findViewById(R.id.text_view_datum);
-//            imageView.setOnClickListener(this);
-            imageRecipeLogoView.setOnClickListener(this);
 
-//            imageView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int position = getAdapterPosition();
-////                    int position = getAdapterPosition();
-//                    mItemClickListener.onItemClick(position);
-//                    Toast.makeText(v.getContext(), mTupperMeals.get(position).getTitle(), Toast.LENGTH_SHORT).show();
-//                }
-//            });
+//            imageRecipeLogoView.setOnClickListener(this);
             imageRecipeLogoView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

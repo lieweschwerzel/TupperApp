@@ -30,7 +30,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/text_view_status"
+            android:id="@+id/refrigerator_type_spinner"
             android:layout_width="101dp"
             android:layout_height="28dp"
             android:layout_below="@id/text_view_title"
@@ -53,7 +53,7 @@
             android:text="Datum"
             android:textAlignment="textStart"
             app:layout_constraintStart_toEndOf="@+id/imageView_image"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_status" />
+            app:layout_constraintTop_toBottomOf="@+id/refrigerator_type_spinner" />
 
         <ImageView
             android:id="@+id/imageView_image"

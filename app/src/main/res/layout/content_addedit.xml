@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:layout_marginBottom="8dp"
@@ -51,19 +51,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
 
-        <EditText
-            android:id="@+id/editPlatform_addedit"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:ellipsize="end"
-            android:hint="@string/platform"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColorLink="@color/colorPrimary"
-            tools:layout_editor_absoluteX="11dp" />
-
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
@@ -72,7 +59,7 @@
             android:paddingStart="6dp"
             android:paddingTop="10dp"
             android:paddingEnd="1dp"
-            android:text="@string/status"
+            android:text="@string/coolingtype"
             android:textAppearance="@android:style/TextAppearance.StatusBar.EventContent"
             android:textColorLink="@color/colorPrimary"
             android:textSize="18sp" />
@@ -81,8 +68,9 @@
             android:id="@+id/editStatus_addedit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:spinnerMode="dialog" />
+            android:spinnerMode="dropdown" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -104,11 +92,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="8dp"
         android:text="Take picture"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.581"
+        app:layout_constraintHorizontal_bias="0.431"
         app:layout_constraintStart_toEndOf="@+id/sensorButton"
         app:layout_constraintTop_toBottomOf="@+id/imageTupperMeal_addedit" />
 
@@ -117,11 +105,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="8dp"
         android:text="check light"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintHorizontal_bias="0.332"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageTupperMeal_addedit" />
 

@@ -3,6 +3,7 @@ package com.example.tuppermeals.ui;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,13 +32,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements TupperMealAdapter.OnItemClickListener, SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity implements TupperMealAdapter.OnItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
     //instance variables
     private List<TupperMeal> mTupperMeals;
     //    private List<Recipe_old> mRecipes;
     private TupperMealAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private MainViewModel mMainViewModel;
+    public static final String LOG_TAG = TupperMealAdapter.class.getName();
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListner;
 
@@ -151,13 +154,17 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.signoutmenu) {
-            //deleteAll();
-           signOut2();
-            return true;
+        switch (item.getItemId()){
+            case R.id.settingsmenu:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.signoutmenu:
+                signOut2();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     public void signOut2(){
@@ -176,15 +183,7 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
     }
 
 
-    @Override
-    public boolean onQueryTextSubmit(String s) {
-        return false;
-    }
 
-    @Override
-    public boolean onQueryTextChange(String s) {
-        return false;
-    }
 
 
     @Override
@@ -194,5 +193,10 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
 //        mTupperMeals.get(0).setImageId(bitmap);
 //        mAdapter.
 //        imageView.setImageBitmap(bitmap);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        Log.d(LOG_TAG, "Preferences updated");
     }
 }

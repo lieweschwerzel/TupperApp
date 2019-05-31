@@ -12,15 +12,15 @@ public class TupperMeal implements Parcelable {
     int id;
     private int ImageId;
     public String title;
-    public String status;
+    public String coolingtype;
     public String date;
     public String url;
 
 
-    public TupperMeal(String title, int ImageId, String status, String date, String url) {
+    public TupperMeal(String title, int ImageId, String coolingtype, String date, String url) {
         this.title = title;
         this.ImageId = ImageId;
-        this.status = status;
+        this.coolingtype = coolingtype;
         this.date = date;
         this.url = url;
     }
@@ -31,7 +31,7 @@ public class TupperMeal implements Parcelable {
                 "id=" + id +
                 ", ImageId=" + ImageId +
                 ", title='" + title + '\'' +
-                ", status='" + status + '\'' +
+                ", coolingtype='" + coolingtype + '\'' +
                 ", date='" + date + '\'' +
                 ", url='" + url + '\'' +
                 '}';
@@ -41,7 +41,7 @@ public class TupperMeal implements Parcelable {
         id = in.readInt();
         title = in.readString();
         ImageId = in.readInt();
-        status = in.readString();
+        coolingtype = in.readString();
         date = in.readString();
         url = in.readString();
     }
@@ -82,12 +82,12 @@ public class TupperMeal implements Parcelable {
         this.ImageId = ImageId;
     }
 
-    public String getStatus() {
-        return status;
+    public String getCoolingType() {
+        return coolingtype;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCoolingtype(String coolingtype) {
+        this.coolingtype = coolingtype;
     }
 
     public String getDate() {
@@ -116,7 +116,7 @@ public class TupperMeal implements Parcelable {
         dest.writeInt(id);
         dest.writeString(title);
         dest.writeInt(ImageId);
-        dest.writeString(status);
+        dest.writeString(coolingtype);
         dest.writeString(date);
         dest.writeString(url);
     }

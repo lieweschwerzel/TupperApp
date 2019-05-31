@@ -1,17 +1,17 @@
 package com.example.tuppermeals.ui;
 
 import android.Manifest;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -61,7 +61,7 @@ public class AddEditActivity extends AppCompatActivity {
     private EditText mTupperMealTitle;
     private EditText mTupperMealPlatform;
     private ImageView mTupperMealImage;
-    private Spinner mGameStatus;
+    private Spinner mCoolingType;
     private Button cameraButton, sensorButton;
     private static final int REQUEST_CAPTURE_IMAGE = 100;
     public static final int REQUEST_PERMISSION = 200;
@@ -77,7 +77,7 @@ public class AddEditActivity extends AppCompatActivity {
         mTupperMealTitle = findViewById(R.id.editTitle_addedit);
         mTupperMealPlatform = findViewById(R.id.editTitle_addedit);
         mTupperMealImage = findViewById(R.id.imageTupperMeal_addedit);
-        mGameStatus = findViewById(R.id.editStatus_addedit);
+        mCoolingType = findViewById(R.id.editStatus_addedit);
         cameraButton = findViewById(R.id.cameraButton);
         sensorButton = findViewById(R.id.sensorButton);
         mTupperMeals = new ArrayList<>();
@@ -94,9 +94,9 @@ public class AddEditActivity extends AppCompatActivity {
             mTupperMealTitle.setText(tmpTupperMeal.getTitle());
             mTupperMealImage.setImageResource(tmpTupperMeal.getImageId());
             Glide.with(this).load(tmpTupperMeal.getUrl()).into(mTupperMealImage);
-            //Spinner instellen, krijg positie van status in de lijst met spinner elementen
-            String tmpstatus = tmpTupperMeal.getStatus();
-            mGameStatus.setSelection(getmGameStatusPos(tmpstatus));
+            //Spinner instellen, krijg positie van coolingtype in de lijst met spinner elementen
+            String tmpstatus = tmpTupperMeal.getCoolingType();
+            mCoolingType.setSelection(getmGameStatusPos(tmpstatus));
         } else
             setTitle("Add your Meal");
 
@@ -133,26 +133,29 @@ public class AddEditActivity extends AppCompatActivity {
                 String title = mTupperMealTitle.getText().toString();
                 int imageid = R.drawable.person;
                 String url = currentPhotoPath;
-                String status = mGameStatus.getSelectedItem().toString();
+                SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                String strUserName = SP.getString("username", "NA");
+
+                String coolingtype = mCoolingType.getSelectedItem().toString();
                 String date = getDate();
 
                 //Check if everything has been added
-//                if (!(TextUtils.isEmpty(title.trim())) && status != "Select a status...") {
+//                if (!(TextUtils.isEmpty(title.trim())) && coolingtype != "Select a coolingtype...") {
                 if (tmpTupperMeal != null) {
-                    TupperMeal editTupperMeal = new TupperMeal(title, imageid, status, date, url);
+                    TupperMeal editTupperMeal = new TupperMeal(title, imageid, coolingtype, date, url);
                     int id = tmpTupperMeal.getId();
                     editTupperMeal.setId(id);
                     mMainViewModel.update(editTupperMeal);
                     Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
-                    TupperMeal newTupperMeal = new TupperMeal(title, imageid, status, date, url);
+                    TupperMeal newTupperMeal = new TupperMeal(title, imageid, coolingtype, date, url);
                     mMainViewModel.insert(newTupperMeal);
                     Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
 //                } else
-//                    Snackbar.make(view, "Please insert a title, platform and select a status", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+//                    Snackbar.make(view, "Please insert a title, platform and select a coolingtype", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
 
@@ -235,13 +238,11 @@ public class AddEditActivity extends AppCompatActivity {
 
     // add items into spinner dynamically
     public void addItemsOnSpinner() {
-        mGameStatus = (Spinner) findViewById(R.id.editStatus_addedit);
+        mCoolingType = (Spinner) findViewById(R.id.editStatus_addedit);
         List<String> list = new ArrayList<String>();
-//        list.add("Select a status...");
-        list.add("Want to Play");
-        list.add("Playing");
-        list.add("Stalled");
-        list.add("Dropped");
+//        list.add("Select a coolingtype...");
+        list.add("Fridge");
+        list.add("Freezer");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list) {
             //grijs maken van de voorselectie op de spinner nadat erop is geklikt
@@ -271,18 +272,15 @@ public class AddEditActivity extends AppCompatActivity {
             }
         };
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mGameStatus.setAdapter(dataAdapter);
+        mCoolingType.setAdapter(dataAdapter);
 
     }
 
     // get position of existing Status in spinner
     public int getmGameStatusPos(String status) {
         List<String> list = new ArrayList<>();
-        list.add("Select a status...");
-        list.add("Want to Play");
-        list.add("Playing");
-        list.add("Stalled");
-        list.add("Dropped");
+        list.add("Fridge");
+        list.add("Freezer");
         return list.indexOf(status);
     }
 

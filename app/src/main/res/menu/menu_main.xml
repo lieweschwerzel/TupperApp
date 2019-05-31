@@ -4,6 +4,11 @@ xmlns:tools="http://schemas.android.com/tools"
 tools:context="com.example.bucketlist.ui.MainActivity">
 
     <item
+        android:id="@+id/settingsmenu"
+        android:icon="@drawable/image"
+        android:title="Settings"/>
+
+    <item
         android:id="@+id/signoutmenu"
         android:icon="@drawable/common_google_signin_btn_icon_light_focused"
         android:title="Signout"/>
