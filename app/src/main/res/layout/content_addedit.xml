@@ -88,8 +88,8 @@
 
     <ImageView
         android:id="@+id/imageTupperMeal_addedit"
-        android:layout_width="379dp"
-        android:layout_height="236dp"
+        android:layout_width="386dp"
+        android:layout_height="273dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
@@ -104,7 +104,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
         android:text="Take picture"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +117,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
         android:text="check light"
         app:layout_constraintEnd_toEndOf="parent"

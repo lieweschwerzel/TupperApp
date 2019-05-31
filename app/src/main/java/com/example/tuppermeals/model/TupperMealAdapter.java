@@ -55,7 +55,7 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
 //        viewHolder.imageView.setImageDrawable(tupperMeal.getUrl());
         viewHolder.imageRecipeLogoView.setImageResource(R.drawable.recipelogo);
         viewHolder.statusView.setText(tupperMeal.getStatus());
-        viewHolder.dateView.setText(tupperMeal.getDate());
+        viewHolder.dateView.setText("Expires on: "+tupperMeal.getDate());
 
         String poster = "https:\\/\\/www.themealdb.com\\/image\\/media\\/meals\\/ustsqw1468250014.jpg";
 //        poster.replace("\\", "");
