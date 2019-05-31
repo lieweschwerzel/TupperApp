@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,9 @@ import com.example.tuppermeals.ui.RecipeActivity;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.ViewHolder> {
@@ -52,14 +53,21 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
         viewHolder.titleView.setText(tupperMeal.getTitle());
         viewHolder.imageRecipeLogoView.setImageResource(R.drawable.recipelogo);
         viewHolder.refrigeratorType.setText(tupperMeal.getCoolingType());
+
+
+
+        String expiry = convertDate(tupperMeal.getDate(), tupperMeal.getCoolingType());
+        viewHolder.dateView.setText("Expires on: " + expiry);
+
+        String url = tupperMeal.getUrl();
+        Glide.with(mContext).load(url).into(viewHolder.imageView);
+    }
+
+    private String convertDate(String date, String coolingType) {
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(mContext);
         String fridge = SP.getString("fridge", "NA");
         String freezer = SP.getString("freezer", "NA");
-        System.out.println(tupperMeal.getCoolingType());
-
-
-
-        String dt = tupperMeal.getDate();  // Start date
+        String dt = date;  // Start date
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Calendar c = Calendar.getInstance();
         try {
@@ -67,40 +75,23 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if (tupperMeal.getCoolingType().equals("Fridge")) {
-            System.out.println("HIER IS OBJECT " + tupperMeal.getCoolingType());
+        if (coolingType.equals("Fridge")) {
             c.add(Calendar.DATE, Integer.valueOf(fridge));  // number of days to add
             dt = sdf.format(c.getTime());  // dt is now the new date
-//        System.out.println("EDITED TIME  " + dt);
-            viewHolder.dateView.setText("Expires on: " + dt);
-        }
-        else{
+        } else {
+            System.out.println("HIER IS OBJECT met " + coolingType);
             c.add(Calendar.DATE, Integer.valueOf(freezer));  // number of days to add
             dt = sdf.format(c.getTime());  // dt is now the new date
-//        System.out.println("EDITED TIME  " + dt);
-            viewHolder.dateView.setText("Expires on: " + dt);
         }
+//        Calendar b = Calendar.getInstance();
 
-        String url = tupperMeal.getUrl();
-        Glide.with(mContext).load(url).into(viewHolder.imageView);
+        return dt;
     }
 
-    public TupperMeal getMealAt(int position) {
-        return mTupperMeals.get(position);
-    }
-
-    @Override
-    public int getItemCount() {
-        return mTupperMeals.size();
-    }
-
-    public void swapList(List<TupperMeal> newList) {
-        mTupperMeals = newList;
-        if (newList != null) {
-            // Force the RecyclerView to refresh
-            this.notifyDataSetChanged();
-        }
-    }
+//    public static long getDifferenceDays(Date d1, Date d2) {
+//        long diff = d2.getTime() - d1.getTime();
+//        return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView titleView;
@@ -139,5 +130,22 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+    }
+
+    public TupperMeal getMealAt(int position) {
+        return mTupperMeals.get(position);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mTupperMeals.size();
+    }
+
+    public void swapList(List<TupperMeal> newList) {
+        mTupperMeals = newList;
+        if (newList != null) {
+            // Force the RecyclerView to refresh
+            this.notifyDataSetChanged();
+        }
     }
 }

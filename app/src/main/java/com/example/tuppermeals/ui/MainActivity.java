@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
                 System.out.println("LISTENING! - Pref changed for: " + key + " pref: " +
                         prefs.getString(key, null));
 //                Debug.out( );
-                updateUI(); 
+                updateUI();
         }
         };
 
