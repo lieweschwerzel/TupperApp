@@ -159,12 +159,14 @@ public class AddEditActivity extends AppCompatActivity {
                     }
                     Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
                     startActivity(intent);
+                    CustomIntent.customType(AddEditActivity.this, "fadein-to-fadeout");
                 } else {
                     String url = currentPhotoPath;
                     TupperMeal newTupperMeal = new TupperMeal(title, imageid, coolingtype, date, url);
                     mMainViewModel.insert(newTupperMeal);
                     Intent intent = new Intent(AddEditActivity.this, MainActivity.class);
                     startActivity(intent);
+                    CustomIntent.customType(AddEditActivity.this, "fadein-to-fadeout");
                 }
                 } else
                     Snackbar.make(view, "Please type in a name for a meal and select a type of cooling", Snackbar.LENGTH_LONG).setAction("Action", null).show();

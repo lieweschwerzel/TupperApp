@@ -1,16 +1,16 @@
 
-
 package com.example.tuppermeals.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,16 +19,16 @@ import com.example.tuppermeals.R;
 import com.example.tuppermeals.ui.MainActivity;
 import com.example.tuppermeals.ui.RecipeActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
-//import com.bumptech.glide.Glide;
 
-
-public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.ViewHolder> implements Filterable {
+public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.ViewHolder> {
     final private OnItemClickListener mItemClickListener;
     private Context mContext;
-    public List<TupperMeal> mTupperMeals, filterList;
-    CustomFilter filter;
+    public List<TupperMeal> mTupperMeals;
 
     public TupperMealAdapter(Context mContext, List<TupperMeal> mTupperMeals, OnItemClickListener mItemClickListener) {
         this.mContext = mContext;
@@ -46,14 +46,40 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
         return new ViewHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         TupperMeal tupperMeal = mTupperMeals.get(i);
         viewHolder.titleView.setText(tupperMeal.getTitle());
         viewHolder.imageRecipeLogoView.setImageResource(R.drawable.recipelogo);
         viewHolder.refrigeratorType.setText(tupperMeal.getCoolingType());
-        viewHolder.dateView.setText("Expires on: "+tupperMeal.getDate());
+        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String fridge = SP.getString("fridge", "NA");
+        String freezer = SP.getString("freezer", "NA");
+        System.out.println(tupperMeal.getCoolingType());
+
+
+
+        String dt = tupperMeal.getDate();  // Start date
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(dt));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (tupperMeal.getCoolingType().equals("Fridge")) {
+            System.out.println("HIER IS OBJECT " + tupperMeal.getCoolingType());
+            c.add(Calendar.DATE, Integer.valueOf(fridge));  // number of days to add
+            dt = sdf.format(c.getTime());  // dt is now the new date
+//        System.out.println("EDITED TIME  " + dt);
+            viewHolder.dateView.setText("Expires on: " + dt);
+        }
+        else{
+            c.add(Calendar.DATE, Integer.valueOf(freezer));  // number of days to add
+            dt = sdf.format(c.getTime());  // dt is now the new date
+//        System.out.println("EDITED TIME  " + dt);
+            viewHolder.dateView.setText("Expires on: " + dt);
+        }
 
         String url = tupperMeal.getUrl();
         Glide.with(mContext).load(url).into(viewHolder.imageView);
@@ -91,7 +117,6 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
             refrigeratorType = itemView.findViewById(R.id.refrigerator_type_spinner);
             dateView = itemView.findViewById(R.id.text_view_datum);
 
-//            imageRecipeLogoView.setOnClickListener(this);
             imageRecipeLogoView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -114,16 +139,5 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
 
     public interface OnItemClickListener {
         void onItemClick(int position);
-    }
-
-
-    @Override
-    public Filter getFilter() {
-        if (filter == null) {
-            filter = new CustomFilter(filterList, this);
-        }
-        return filter;
-
-
     }
 }

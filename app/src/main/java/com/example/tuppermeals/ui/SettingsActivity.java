@@ -1,9 +1,8 @@
 package com.example.tuppermeals.ui;
 
+import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.example.tuppermeals.R;
 public class SettingsActivity extends PreferenceActivity {

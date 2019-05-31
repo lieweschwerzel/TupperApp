@@ -182,21 +182,15 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
         startActivity(intent);
     }
 
-
-
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-//        mTupperMeals.get(0).setImageId(bitmap);
-//        mAdapter.
-//        imageView.setImageBitmap(bitmap);
+//        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         Log.d(LOG_TAG, "Preferences updated");
+        updateUI();
     }
 }
