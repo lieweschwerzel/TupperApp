@@ -48,14 +48,10 @@ import java.util.List;
 
 import maes.tech.intentanim.CustomIntent;
 
-//import com.google.firebase.storage.FirebaseStorage;
-//import com.google.firebase.storage.UploadTask;
-
 public class AddEditActivity extends AppCompatActivity {
     //instance variables
     private List<TupperMeal> mTupperMeals;
-    private List<Recipe> mRecipes;
-
+//    private List<Recipe> mRecipes;
 
     private TupperMealAdapter mAdapter;
     private MainViewModel mMainViewModel;
@@ -112,11 +108,10 @@ public class AddEditActivity extends AppCompatActivity {
         sensorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mp.start();
-//                Intent intent = new Intent(AddEditActivity.this, SensorActivity.class);
-//                startActivity(intent);
-//                CustomIntent.customType(AddEditActivity.this, "left-to-right");
-                Toast.makeText(AddEditActivity.this, currentPhotoPath, Toast.LENGTH_SHORT).show();
+                mp.start();
+                Intent intent = new Intent(AddEditActivity.this, SensorActivity.class);
+                startActivity(intent);
+                CustomIntent.customType(AddEditActivity.this, "left-to-right");
             }
         });
 
