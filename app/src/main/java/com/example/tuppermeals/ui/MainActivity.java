@@ -19,6 +19,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import maes.tech.intentanim.CustomIntent;
 
 import com.example.tuppermeals.R;
 import com.example.tuppermeals.model.MainViewModel;
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
 //            });
                 Intent intent = new Intent(MainActivity.this, AddEditActivity.class);
                 startActivity(intent);
+                CustomIntent.customType(MainActivity.this, "left-to-right");
             }
         });
 

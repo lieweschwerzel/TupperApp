@@ -43,7 +43,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+
+import maes.tech.intentanim.CustomIntent;
 
 //import com.google.firebase.storage.FirebaseStorage;
 //import com.google.firebase.storage.UploadTask;
@@ -81,8 +82,6 @@ public class AddEditActivity extends AppCompatActivity {
         sensorButton = findViewById(R.id.sensorButton);
         mTupperMeals = new ArrayList<>();
 
-
-
         addItemsOnSpinner();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
@@ -95,13 +94,11 @@ public class AddEditActivity extends AppCompatActivity {
             mTupperMealTitle.setText(tmpTupperMeal.getTitle());
             mTupperMealImage.setImageResource(tmpTupperMeal.getImageId());
             Glide.with(this).load(tmpTupperMeal.getUrl()).into(mTupperMealImage);
-//            mTupperMealTitle.setText(mMainViewModel.getAllRecipes().toString());
-//            mTupperMealImage.setImageDrawable(tmpTupperMeal.getImageId());
             //Spinner instellen, krijg positie van status in de lijst met spinner elementen
             String tmpstatus = tmpTupperMeal.getStatus();
             mGameStatus.setSelection(getmGameStatusPos(tmpstatus));
         } else
-            setTitle("New Meal");
+            setTitle("Add your Meal");
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                 PackageManager.PERMISSION_GRANTED) {
@@ -116,6 +113,7 @@ public class AddEditActivity extends AppCompatActivity {
                 mp.start();
                 Intent intent = new Intent(AddEditActivity.this, SensorActivity.class);
                 startActivity(intent);
+                CustomIntent.customType(AddEditActivity.this, "left-to-right");
 
             }
         });
@@ -123,8 +121,6 @@ public class AddEditActivity extends AppCompatActivity {
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(intent, 0);
                 openCameraIntent();
             }
         });
@@ -162,24 +158,30 @@ public class AddEditActivity extends AppCompatActivity {
 
         mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
-        mMainViewModel.getAllRecipes().observe(this, new Observer<List<Recipe>>() {
-            @Override
-            public void onChanged(@Nullable List<Recipe> recipes) {
-                mRecipes = recipes;
-                String url = mRecipes.get(0).getImageUrl().replace("\\", "");
-                Toast.makeText(AddEditActivity.this, url, Toast.LENGTH_LONG).show();
-                System.out.println(url);
 
-                String poster = "https://cdn0.wideopencountry.com/wp-content/uploads/2018/07/country-songs-about-rain-793x526.jpg";
 
-                Glide.with(AddEditActivity.this)
-                        .load(poster)
-                        .into(mTupperMealImage);
-            }
-        });
+//        mMainViewModel.getAllRecipes().observe(this, new Observer<List<Recipe>>() {
+//            @Override
+//            public void onChanged(@Nullable List<Recipe> recipes) {
+//                mRecipes = recipes;
+//                String url = mRecipes.get(0).getImageUrl().replace("\\", "");
+//                Toast.makeText(AddEditActivity.this, url, Toast.LENGTH_LONG).show();
+//                System.out.println(url);
+////
+////                String poster = "https://cdn0.wideopencountry.com/wp-content/uploads/2018/07/country-songs-about-rain-793x526.jpg";
+////
+////                Glide.with(AddEditActivity.this)
+////                        .load(poster)
+////                        .into(mTupperMealImage);
+//            }
+//        });
     }
 
-
+    @Override
+    public void finish() {
+        super.finish();
+        CustomIntent.customType(this, "fadein-to-fadeout");
+    }
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -225,52 +227,11 @@ public class AddEditActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
         if (requestCode == REQUEST_CAPTURE_IMAGE) {
-            System.out.println("LIEWE   " + currentPhotoPath);
+//            System.out.println("LIEWE   " + currentPhotoPath);
             //don't compare the data to null, it will always come as  null because we are providing a file URI, so load with the imageFilePath we obtained before opening the cameraIntent
             Glide.with(this).load(currentPhotoPath).into(mTupperMealImage);
-            // If you are using Glide.
         }
     }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-////        super.onActivityResult(requestCode, resultCode, data);
-////        Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-////        mTupperMealImage.setImageBitmap(bitmap);
-////        if (requestCode == REQUEST_CAPTURE_IMAGE &&
-////                resultCode == RESULT_OK) {
-////            if (data != null && data.getExtras() != null) {
-////                Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-//        if (requestCode == REQUEST_IMAGE_CAPTURE) {
-//            //don't compare the data to null, it will always come as  null because we are providing a file URI, so load with the imageFilePath we obtained before opening the cameraIntent
-//            Glide.with(this).load(imageFilePath).into(mTupperMealImage);
-////            mTupperMealImage.setImageBitmap(imageBitmap);
-//            // Get the data from an ImageView as bytes
-////        mTupperMealImage.setDrawingCacheEnabled(true);
-////        mTupperMealImage.buildDrawingCache();
-////        Bitmap bitmap = ((BitmapDrawable) mTupperMealImage.getDrawable()).getBitmap();
-////        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-////        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-////        byte[] data2 = baos.toByteArray();
-////
-////        UploadTask uploadTask = mountainsRef.putBytes(data2);
-////        uploadTask.addOnFailureListener(new OnFailureListener() {
-////            @Override
-////            public void onFailure(@NonNull Exception exception) {
-////                // Handle unsuccessful uploads
-////            }
-////        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-////            @Override
-////            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-////                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-////                // ...
-////            }
-////        });
-//        }
-//
-//
-//    }
-
 
     // add items into spinner dynamically
     public void addItemsOnSpinner() {

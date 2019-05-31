@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.example.tuppermeals.R;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class SensorActivity extends AppCompatActivity {
 
     private SensorManager sensorManager;
@@ -64,5 +66,11 @@ public class SensorActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(lightEventListener);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        CustomIntent.customType(SensorActivity.this, "fadein-to-fadeout");
     }
 }
