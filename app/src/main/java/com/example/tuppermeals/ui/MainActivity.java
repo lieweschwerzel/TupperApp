@@ -37,7 +37,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements TupperMealAdapter.OnItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
     //instance variables
     private List<TupperMeal> mTupperMeals;
-    //    private List<Recipe_old> mRecipes;
     private TupperMealAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private MainViewModel mMainViewModel;
@@ -85,10 +84,6 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    startActivityForResult(intent,0);
-//                }
-//            });
                 Intent intent = new Intent(MainActivity.this, AddEditActivity.class);
                 startActivity(intent);
                 CustomIntent.customType(MainActivity.this, "left-to-right");
@@ -135,11 +130,8 @@ public class MainActivity extends AppCompatActivity implements TupperMealAdapter
                         })
                         .show();
                 mAdapter.notifyItemRangeChanged(pos, mAdapter.getItemCount());
-
             }
         }).attachToRecyclerView(mRecyclerView);
-//        mMainViewModel.searchRecipes("pizza");
-//        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     private void registerPreferenceListener()

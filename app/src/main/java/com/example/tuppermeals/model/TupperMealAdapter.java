@@ -65,8 +65,8 @@ public class TupperMealAdapter extends RecyclerView.Adapter<TupperMealAdapter.Vi
 
     private String convertDate(String date, String coolingType) {
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(mContext);
-        String fridge = SP.getString("fridge", "NA");
-        String freezer = SP.getString("freezer", "NA");
+        String fridge = SP.getString("fridge", "3");
+        String freezer = SP.getString("freezer", "30");
         String dt = date;  // Start date
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Calendar c = Calendar.getInstance();

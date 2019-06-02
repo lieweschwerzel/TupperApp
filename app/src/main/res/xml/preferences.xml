@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <EditTextPreference android:title="Set the expiry days for your fridge"
+    <EditTextPreference android:title="Expiry fridge"
         android:key="fridge"
         android:defaultValue="3"
-        android:summary="Set the expiry days of your fridge here"></EditTextPreference>
+        android:summary="Change the expiry days for your fridge (3 default)"></EditTextPreference>
 
-    <EditTextPreference android:title="Set the expiry days for your freezer"
+    <EditTextPreference android:title="Expiry freezer"
         android:key="freezer"
         android:defaultValue="30"
-        android:summary="Set the expiry days of your freezer here"></EditTextPreference>
+        android:summary="Change the expiry days for your freezer (30 default)"></EditTextPreference>
 
 </PreferenceScreen>

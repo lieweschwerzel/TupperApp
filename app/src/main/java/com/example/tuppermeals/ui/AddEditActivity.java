@@ -129,9 +129,6 @@ public class AddEditActivity extends AppCompatActivity {
                 String platform = mTupperMealPlatform.getText().toString();
                 String title = mTupperMealTitle.getText().toString();
                 int imageid = R.drawable.person;
-//                String url = currentPhotoPath;
-                SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                String strUserName = SP.getString("username", "NA");
 
                 String coolingtype = mCoolingType.getSelectedItem().toString();
                 String date = getDate();
@@ -167,7 +164,6 @@ public class AddEditActivity extends AppCompatActivity {
                     Snackbar.make(view, "Please type in a name for a meal and select a type of cooling", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
-
         mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
     }
 
@@ -220,7 +216,6 @@ public class AddEditActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
         if (requestCode == REQUEST_CAPTURE_IMAGE) {
-//            System.out.println("LIEWE   " + currentPhotoPath);
             //don't compare the data to null, it will always come as  null because we are providing a file URI, so load with the imageFilePath we obtained before opening the cameraIntent
             Glide.with(this).load(currentPhotoPath).into(mTupperMealImage);
         }
