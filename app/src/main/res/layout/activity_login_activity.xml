@@ -67,12 +67,6 @@
             android:textAllCaps="false"
             android:textSize="15sp" />
 
-        <com.google.android.gms.common.SignInButton
-            android:paddingTop="10dp"
-            android:id="@+id/sign_in_google"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
     </LinearLayout>
 
 
